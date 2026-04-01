@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Filament\Modules;
+
+use App\Models\PageRouteUrls;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Fieldset;
+
+class ButtonModule
+{
+    public static function getPageRouteUrlOptions(): array
+    {
+        return PageRouteUrls::query()
+            ->with('pageRoute:id,route_name')
+            ->get(['id', 'slug', 'page_route_id'])
+            ->mapWithKeys(function (PageRouteUrls $pageRouteUrl): array {
+                $routeName = $pageRouteUrl->pageRoute?->route_name;
+                $slug = $pageRouteUrl->getAttribute('slug');
+                $id = (string) $pageRouteUrl->getKey();
+                $label = trim(($routeName ? ($routeName . ' - ') : '') . ($slug ?? ''));
+
+                return [
+                    $id => ($label !== '' ? $label : ('#' . $id)),
+                ];
+            })
+            ->all();
+    }
+
+    public static function getDefinition(string $arrayToSaveName, string $label = 'Tlačítko'): Fieldset
+    {
+        return Fieldset::make($label)->schema([
+            TextInput::make($arrayToSaveName . '.buttonText')->label('Text v tlačítku'),
+            Select::make($arrayToSaveName . '.buttonLink.pageRouteUrl')
+                ->label('Vyberte stránku')
+                ->options(fn (): array => self::getPageRouteUrlOptions())
+                ->formatStateUsing(fn ($state) => is_array($state) ? ($state['id'] ?? $state['value'] ?? null) : $state)
+                ->searchable()
+                ->preload()
+                ->default(null)
+                ->placeholder('— vyberte stránku —'),
+            TextInput::make($arrayToSaveName . '.buttonLink.slug')
+                ->label('Odkaz v tlačítku')
+                ->helperText('Zadejte slug pro odkaz (volitelné)'),
+            Checkbox::make($arrayToSaveName . '.buttonLink.is_external')
+                ->label('Externí odkaz')
+                ->extraAttributes(['class' => 'flex items-center']),
+        ]);
+    }
+}
