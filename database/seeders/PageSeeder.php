@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PageRouteUrls;
 use App\Models\System\Page;
 use App\Models\System\PageRoute;
 use Illuminate\Database\Seeder;
@@ -30,6 +31,11 @@ class PageSeeder extends Seeder
                 continue;
             }
 
+            $blogIndexPageRouteUrlId = PageRouteUrls::query()
+                ->where('page_route_id', $blogIndexRoute->getKey())
+                ->where('locale', $locale)
+                ->value('id');
+
             $homePage = Page::query()->updateOrCreate(
                 [
                     'lang_locale' => $locale,
@@ -44,8 +50,14 @@ class PageSeeder extends Seeder
                         'body' => $locale === 'cs'
                             ? '<p>Toto je výchozí obsah domovské stránky pro testování po instalaci.</p>'
                             : '<p>This is default homepage content for post-install testing.</p>',
-                        'button_text' => $locale === 'cs' ? 'Přejít na blog' : 'Go to blog',
-                        'button_url' => $locale === 'cs' ? '/blog' : '/en/blog',
+                        'button' => [
+                            'buttonText' => $locale === 'cs' ? 'Přejít na blog' : 'Go to blog',
+                            'buttonLink' => [
+                                'pageRouteUrl' => $blogIndexPageRouteUrlId,
+                                'slug' => null,
+                                'is_external' => false,
+                            ],
+                        ],
                     ],
                     'seo' => [
                         'title' => $locale === 'cs' ? 'Domovská stránka' : 'Homepage',

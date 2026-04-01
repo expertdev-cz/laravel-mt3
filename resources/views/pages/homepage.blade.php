@@ -19,10 +19,10 @@
                 </div>
             @endif
 
-            @if(isset($page->content['button_text']) && isset($page->content['button_url']))
+            @if(isset($page->content['button']['buttonText'], $page->content['button']['buttonLink']))
                 <div class="mt-8">
-                    <a href="{{ $page->content['button_url'] }}" class="inline-flex items-center rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
-                        {{ $page->content['button_text'] }}
+                    <a href="{{ formatPageLink($page->content['button']['buttonLink']) }}" @if(!empty($page->content['button']['buttonLink']['is_external'])) target="_blank" rel="noopener noreferrer" @endif class="inline-flex items-center rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700">
+                        {{ $page->content['button']['buttonText'] }}
                     </a>
                 </div>
             @endif

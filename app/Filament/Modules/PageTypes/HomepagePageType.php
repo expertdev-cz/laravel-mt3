@@ -2,6 +2,7 @@
 
 namespace App\Filament\Modules\PageTypes;
 
+use App\Filament\Modules\ButtonModule;
 use App\Filament\Modules\ImageModule;
 use App\Filament\Modules\ImagesModule;
 use Filament\Forms\Components\RichEditor;
@@ -19,11 +20,7 @@ class HomepagePageType
                         ->label('Nadpis'),
                     RichEditor::make($arrayToSaveName . '.body')
                         ->label('Text'),
-                    TextInput::make($arrayToSaveName . '.button_text')
-                        ->label('Text tlacitka'),
-                    TextInput::make($arrayToSaveName . '.button_url')
-                        ->label('Odkaz tlacitka')
-                        ->url(),
+                    ButtonModule::getDefinition($arrayToSaveName . '.button', 'Tlačítko'),
                     ImageModule::getDefinition($arrayToSaveName . '.image', 'Obrazek homepage', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                     ImagesModule::getDefinition($arrayToSaveName . '.images', 'Galerie obrázků homepage', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                 ])
