@@ -11,7 +11,7 @@ use Filament\Schemas\Components\Fieldset;
 
 class HomepagePageType
 {
-    public static function getDefinition(string $arrayToSaveName = 'content'): array
+    public static function getDefinition(string $arrayToSaveName = 'content', ?string $locale = null): array
     {
         return [
             Fieldset::make('Obsah homepage')
@@ -20,7 +20,7 @@ class HomepagePageType
                         ->label('Nadpis'),
                     RichEditor::make($arrayToSaveName . '.body')
                         ->label('Text'),
-                    ButtonModule::getDefinition($arrayToSaveName . '.button', 'Tlačítko'),
+                    ButtonModule::getDefinition($arrayToSaveName . '.button', 'Tlačítko', $locale),
                     ImageModule::getDefinition($arrayToSaveName . '.image', 'Obrazek homepage', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                     ImagesModule::getDefinition($arrayToSaveName . '.images', 'Galerie obrázků homepage', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                 ])

@@ -48,7 +48,9 @@ class PageResource extends Resource
                     ->schema([
                         Section::make()
                             ->schema(fn (Get $get): array => match ($get('type')) {
-                                'homepage' => HomepagePageType::getDefinition(),
+                                'homepage' => HomepagePageType::getDefinition(
+                                    locale: (string) ($get('lang_locale') ?: app()->getLocale())
+                                ),
                                 'articles' => ArticlesPageType::getDefinition(),
                                 'contact' => ContactPageType::getDefinition(),
                                 'text' => TextPageType::getDefinition(),

@@ -10,10 +10,13 @@ use Filament\Schemas\Components\Fieldset;
 
 class ButtonModule
 {
-    public static function getPageRouteUrlOptions(): array
+    public static function getPageRouteUrlOptions(?string $locale = null): array
     {
-        return PageRouteUrls::query()
+        $query = PageRouteUrls::query()
             ->with('pageRoute:id,route_name')
+            ->when(!blank($locale), fn ($q) => $q->where('locale', $locale));
+
+        return $query
             ->get(['id', 'slug', 'page_route_id'])
             ->mapWithKeys(function (PageRouteUrls $pageRouteUrl): array {
                 $routeName = $pageRouteUrl->pageRoute?->route_name;
@@ -28,13 +31,13 @@ class ButtonModule
             ->all();
     }
 
-    public static function getDefinition(string $arrayToSaveName, string $label = 'Tlačítko'): Fieldset
+    public static function getDefinition(string $arrayToSaveName, string $label = 'Tlačítko', ?string $locale = null): Fieldset
     {
         return Fieldset::make($label)->schema([
             TextInput::make($arrayToSaveName . '.buttonText')->label('Text v tlačítku'),
             Select::make($arrayToSaveName . '.buttonLink.pageRouteUrl')
                 ->label('Vyberte stránku')
-                ->options(fn (): array => self::getPageRouteUrlOptions())
+                ->options(fn (): array => self::getPageRouteUrlOptions($locale))
                 ->formatStateUsing(fn ($state) => is_array($state) ? ($state['id'] ?? $state['value'] ?? null) : $state)
                 ->searchable()
                 ->preload()

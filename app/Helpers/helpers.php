@@ -11,6 +11,7 @@ if (!function_exists('formatPageLink')) {
     function formatPageLink(mixed $linkData): string
     {
         static $pageRouteUrlCache = [];
+        static $blogSlugCache = [];
 
         if (empty($linkData)) {
             return '#';
@@ -43,7 +44,9 @@ if (!function_exists('formatPageLink')) {
                         ->select([
                             'page_route_urls.id',
                             'page_route_urls.slug',
+                            'page_route_urls.locale',
                             'page_routes.route_name',
+                            'page_routes.route_path',
                         ])
                         ->first();
 
@@ -64,12 +67,33 @@ if (!function_exists('formatPageLink')) {
             if ($pageRouteUrl) {
                 $slug = !empty($linkData['slug']) ? $linkData['slug'] : $pageRouteUrl->slug;
                 $routeName = $pageRouteUrl->route_name ?? null;
+                $routePath = $pageRouteUrl->route_path ?? null;
 
                 if (empty($routeName)) {
                     return '#';
                 }
 
-                return localizedRoute($routeName, [$slug]);
+                $parameters = ['slug' => $slug];
+
+                if (is_string($routePath) && str_contains($routePath, '{blog_slug}')) {
+                    $locale = $pageRouteUrl->locale ?? app()->getLocale();
+
+                    if (!array_key_exists($locale, $blogSlugCache)) {
+                        $blogSlugCache[$locale] = app('db')->table('page_route_urls')
+                            ->join('page_routes', 'page_routes.id', '=', 'page_route_urls.page_route_id')
+                            ->where('page_routes.route_name', 'blog.index')
+                            ->where('page_route_urls.locale', $locale)
+                            ->value('page_route_urls.slug');
+                    }
+
+                    $blogSlug = $blogSlugCache[$locale] ?? null;
+
+                    if (!empty($blogSlug)) {
+                        $parameters['blog_slug'] = $blogSlug;
+                    }
+                }
+
+                return localizedRoute($routeName, $parameters);
             }
         }
 

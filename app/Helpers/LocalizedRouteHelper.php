@@ -33,11 +33,15 @@ class LocalizedRouteHelper
             $placeholders = $matches[1] ?? [];
 
             foreach ($placeholders as $index => $placeholder) {
-                if (!array_key_exists($index, $parameters)) {
+                if (array_key_exists($placeholder, $parameters)) {
+                    $value = $parameters[$placeholder];
+                } elseif (array_key_exists($index, $parameters)) {
+                    $value = $parameters[$index];
+                } else {
                     continue;
                 }
 
-                $path = str_replace('{' . $placeholder . '}', (string) $parameters[$index], $path);
+                $path = str_replace('{' . $placeholder . '}', (string) $value, $path);
             }
         }
 
