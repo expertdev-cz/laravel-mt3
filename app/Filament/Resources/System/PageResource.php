@@ -42,7 +42,6 @@ class PageResource extends Resource
                 BaseSettingsModule::getDefinition(
                     showPageRouteField: true,
                 ),
-                //MenuModule::getDefinition(),
 
                 Fieldset::make('Obsah')
                     ->schema([
