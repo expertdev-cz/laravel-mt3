@@ -4,7 +4,12 @@ namespace App\Filament\Resources\System;
 
 use App\Filament\Modules\BaseSettingsModule;
 use App\Filament\Modules\PageTypes\AboutUsPageType;
+use App\Filament\Modules\PageTypes\AuthorizedAccessHomePageType;
+use App\Filament\Modules\PageTypes\AuthorizedAccessLoginPageType;
+use App\Filament\Modules\PageTypes\AuthorizedAccessRegisterPageType;
+use App\Filament\Modules\PageTypes\AuthorizedAccessTechnicalSheetsPageType;
 use App\Filament\Modules\PageTypes\HomepagePageType;
+use App\Filament\Modules\PageTypes\InquiryPageType;
 use App\Filament\Modules\PageTypes\ArticlesPageType;
 use App\Filament\Modules\PageTypes\ContactPageType;
 use App\Filament\Modules\PageTypes\ReferenceDetailPageType;
@@ -58,6 +63,11 @@ class PageResource extends Resource
                                 'references' => ReferencesPageType::getDefinition(),
                                 'reference-detail' => ReferenceDetailPageType::getDefinition(),
                                 'technologies' => TechnologiesPageType::getDefinition(),
+                                'authorized-access-login' => AuthorizedAccessLoginPageType::getDefinition(),
+                                'authorized-access-register' => AuthorizedAccessRegisterPageType::getDefinition(),
+                                'inquiry' => InquiryPageType::getDefinition(),
+                                'authorized-access-home' => AuthorizedAccessHomePageType::getDefinition(),
+                                'authorized-access-technical-sheets' => AuthorizedAccessTechnicalSheetsPageType::getDefinition(),
                                 'text' => TextPageType::getDefinition(),
                                 default => [],
                             })->key('dynamicTypeFields')

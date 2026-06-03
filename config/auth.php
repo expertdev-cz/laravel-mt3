@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'authorized_access' => [
+            'driver' => 'session',
+            'provider' => 'authorized_access_users',
+        ],
     ],
 
     /*
@@ -63,6 +68,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\System\User::class,
+        ],
+
+        'authorized_access_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\AuthorizedAccess\AuthorizedAccessUser::class,
         ],
 
         // 'users' => [
@@ -93,6 +103,13 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'authorized_access_users' => [
+            'provider' => 'authorized_access_users',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

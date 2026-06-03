@@ -16,6 +16,11 @@ class PageTypesHelper
         'references' => PagesController::class,
         'reference-detail' => PagesController::class,
         'technologies' => PagesController::class,
+        'authorized-access-login' => PagesController::class,
+        'authorized-access-register' => PagesController::class,
+        'inquiry' => PagesController::class,
+        'authorized-access-home' => PagesController::class,
+        'authorized-access-technical-sheets' => PagesController::class,
     ];
 
     public static array $pageTypesLabels = [
@@ -27,6 +32,11 @@ class PageTypesHelper
         'references' => 'Reference',
         'reference-detail' => 'Detail reference',
         'technologies' => 'Technologie',
+        'authorized-access-login' => 'AP - Přihlášení',
+        'authorized-access-register' => 'AP - Registrace',
+        'inquiry' => 'Napište nám',
+        'authorized-access-home' => 'AP - Rozcestník',
+        'authorized-access-technical-sheets' => 'AP - Technické listy',
     ];
 
     public static array $pageWithAllowedSubpages = [
