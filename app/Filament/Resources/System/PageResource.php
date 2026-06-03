@@ -3,9 +3,13 @@
 namespace App\Filament\Resources\System;
 
 use App\Filament\Modules\BaseSettingsModule;
+use App\Filament\Modules\PageTypes\AboutUsPageType;
 use App\Filament\Modules\PageTypes\HomepagePageType;
 use App\Filament\Modules\PageTypes\ArticlesPageType;
 use App\Filament\Modules\PageTypes\ContactPageType;
+use App\Filament\Modules\PageTypes\ReferenceDetailPageType;
+use App\Filament\Modules\PageTypes\ReferencesPageType;
+use App\Filament\Modules\PageTypes\TechnologiesPageType;
 use App\Filament\Modules\PageTypes\TextPageType;
 use App\Filament\Modules\SeoModule;
 use App\Filament\Resources\System\PageResource\Pages;
@@ -47,11 +51,13 @@ class PageResource extends Resource
                     ->schema([
                         Section::make()
                             ->schema(fn (Get $get): array => match ($get('type')) {
-                                'homepage' => HomepagePageType::getDefinition(
-                                    locale: (string) ($get('lang_locale') ?: app()->getLocale())
-                                ),
+                                'homepage' => HomepagePageType::getDefinition(),
                                 'articles' => ArticlesPageType::getDefinition(),
                                 'contact' => ContactPageType::getDefinition(),
+                                'about-us' => AboutUsPageType::getDefinition(),
+                                'references' => ReferencesPageType::getDefinition(),
+                                'reference-detail' => ReferenceDetailPageType::getDefinition(),
+                                'technologies' => TechnologiesPageType::getDefinition(),
                                 'text' => TextPageType::getDefinition(),
                                 default => [],
                             })->key('dynamicTypeFields')

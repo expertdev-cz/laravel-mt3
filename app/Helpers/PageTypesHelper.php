@@ -12,6 +12,10 @@ class PageTypesHelper
         'articles' => ArticlesController::class,
         'text' => PagesController::class,
         'contact' => PagesController::class,
+        'about-us' => PagesController::class,
+        'references' => PagesController::class,
+        'reference-detail' => PagesController::class,
+        'technologies' => PagesController::class,
     ];
 
     public static array $pageTypesLabels = [
@@ -19,6 +23,10 @@ class PageTypesHelper
         'text' => 'Textová stránka',
         'articles' => 'Blog',
         'contact' => 'Kontakt',
+        'about-us' => 'O nás',
+        'references' => 'Reference',
+        'reference-detail' => 'Detail reference',
+        'technologies' => 'Technologie',
     ];
 
     public static array $pageWithAllowedSubpages = [

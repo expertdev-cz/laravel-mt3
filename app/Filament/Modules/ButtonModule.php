@@ -7,6 +7,7 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Utilities\Get;
 
 class ButtonModule
 {
@@ -37,7 +38,17 @@ class ButtonModule
             TextInput::make($arrayToSaveName . '.buttonText')->label('Text v tlačítku'),
             Select::make($arrayToSaveName . '.buttonLink.pageRouteUrl')
                 ->label('Vyberte stránku')
-                ->options(fn (): array => self::getPageRouteUrlOptions($locale))
+                ->options(function (Get $get) use ($locale): array {
+                    $currentLocale = $locale;
+
+                    if (blank($currentLocale)) {
+                        $currentLocale = $get('lang_locale');
+                    }
+
+                    return self::getPageRouteUrlOptions(
+                        blank($currentLocale) ? null : (string) $currentLocale
+                    );
+                })
                 ->formatStateUsing(fn ($state) => is_array($state) ? ($state['id'] ?? $state['value'] ?? null) : $state)
                 ->searchable()
                 ->preload()
