@@ -23,6 +23,9 @@ class TagsResource extends Resource
     protected static ?string $model = Tag::class;
 
     protected static string|\UnitEnum|null $navigationGroup = 'Články';
+    protected static bool $shouldRegisterNavigation = false;
+
+    public static function canViewAny(): bool { return false; }
     protected static ?int $navigationSort = 20;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-tag';
     protected static ?string $navigationLabel = 'Tagy';

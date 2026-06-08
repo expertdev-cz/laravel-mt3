@@ -28,6 +28,9 @@ class ArticleResource extends Resource
     protected static ?int $navigationSort = 10;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
     protected static ?string $navigationLabel = 'Články';
+    protected static bool $shouldRegisterNavigation = false;
+
+    public static function canViewAny(): bool { return false; }
 
     public static function form(Schema $schema): Schema
     {
