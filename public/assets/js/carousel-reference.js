@@ -1,42 +1,63 @@
- // Carousel – skutečný nekonečný loop
-                // Struktura track: [klon4, klon5, item1, item2, item3, item4, item5, klon1, klon2]
-                const numClonesBefore = 2; // počet klonů na začátku
-                const numRealItems = 5;    // počet reálných položek
-                let currentIndex = numClonesBefore; // začínáme na první reálné položce
+// Carousel – skutečný nekonečný loop
+// Klony jsou generovány dynamicky, Blade renderuje pouze reálné položky.
 
-                const track = document.querySelector('.carousel-track');
-                const items = document.querySelectorAll('.carousel-item-custom');
+document.addEventListener('DOMContentLoaded', function () {
+    const track = document.querySelector('.carousel-track');
+    if (!track) return;
 
-                function moveCarousel(direction) {
-                    currentIndex += direction;
-                    updateCarousel();
+    const realItems = Array.from(track.querySelectorAll('.carousel-item-custom'));
+    const numRealItems = realItems.length;
+    if (numRealItems === 0) return;
 
-                    // Po dokončení animace tiše přeskočíme na reálnou položku (pokud jsme na klonu)
-                    setTimeout(() => {
-                        if (currentIndex >= numClonesBefore + numRealItems) {
-                            track.style.transition = 'none';
-                            currentIndex -= numRealItems;
-                            updateCarousel();
-                            setTimeout(() => { track.style.transition = 'transform 0.5s ease'; }, 50);
-                        } else if (currentIndex < numClonesBefore) {
-                            track.style.transition = 'none';
-                            currentIndex += numRealItems;
-                            updateCarousel();
-                            setTimeout(() => { track.style.transition = 'transform 0.5s ease'; }, 50);
-                        }
-                    }, 500);
-                }
+    const numClones = Math.min(2, numRealItems);
 
-                function updateCarousel() {
-                    const itemWidth = items[0].offsetWidth;
-                    const gap = 32; // 2rem gap
-                    const containerWidth = track.parentElement.parentElement.offsetWidth;
-                    const centerOffset = (containerWidth - itemWidth) / 2;
-                    const offset = centerOffset - (currentIndex * (itemWidth + gap));
-                    track.style.transform = `translateX(${offset}px)`;
-                }
+    // Přidat klony na konec (kopie prvních N reálných položek)
+    for (let i = 0; i < numClones; i++) {
+        const clone = realItems[i].cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+    }
 
-                document.addEventListener('DOMContentLoaded', function () {
-                    updateCarousel();
-                    window.addEventListener('resize', updateCarousel);
-                });
+    // Přidat klony na začátek (kopie posledních N reálných položek) — v obráceném pořadí
+    for (let i = numClones - 1; i >= 0; i--) {
+        const clone = realItems[numRealItems - 1 - i].cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.insertBefore(clone, track.firstChild);
+    }
+
+    const allItems = track.querySelectorAll('.carousel-item-custom');
+    let currentIndex = numClones; // začínáme na první reálné položce
+
+    function updateCarousel(animated) {
+        if (animated === false) {
+            track.style.transition = 'none';
+        }
+        const itemWidth = allItems[0].offsetWidth;
+        const gap = 32; // 2rem
+        const containerWidth = track.parentElement.parentElement.offsetWidth;
+        const centerOffset = (containerWidth - itemWidth) / 2;
+        const offset = centerOffset - (currentIndex * (itemWidth + gap));
+        track.style.transform = `translateX(${offset}px)`;
+    }
+
+    window.moveCarousel = function (direction) {
+        currentIndex += direction;
+        track.style.transition = 'transform 0.5s ease';
+        updateCarousel();
+
+        setTimeout(() => {
+            if (currentIndex >= numClones + numRealItems) {
+                currentIndex -= numRealItems;
+                updateCarousel(false);
+                setTimeout(() => { track.style.transition = 'transform 0.5s ease'; }, 50);
+            } else if (currentIndex < numClones) {
+                currentIndex += numRealItems;
+                updateCarousel(false);
+                setTimeout(() => { track.style.transition = 'transform 0.5s ease'; }, 50);
+            }
+        }, 500);
+    };
+
+    updateCarousel(false);
+    window.addEventListener('resize', () => updateCarousel(false));
+});
