@@ -70,7 +70,7 @@
                 {{-- Language switcher --}}
                 <div class="d-flex align-items-center mb-2">
                     <img src="{{ asset('assets/icons/sipka-footer.svg') }}" class="me-2" height="20px" alt="">
-                    <livewire:system.language-select wire:key="footer-lang" />
+                    <livewire:system.language-select variant="footer" wire:key="footer-lang" />
                 </div>
                 {{-- Legal links --}}
                 <div class="d-flex gap-2 footer-info">

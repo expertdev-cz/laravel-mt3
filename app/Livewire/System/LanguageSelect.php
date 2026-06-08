@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class LanguageSelect extends Component
 {
+    public string $variant = 'header';
+
     public function changeLang(string $selectLocale, string $actualUrl){
         session(['setLang' => $selectLocale]);
         $this->redirect(UrlService::getSamePageInDiffLangRedirUrl($actualUrl, $selectLocale));
@@ -18,8 +20,9 @@ class LanguageSelect extends Component
         $actual = $data->where('locale', '=', app()->getLocale())->first();
 
         return view('livewire.system.language-select',[
-            'langs'=>$data,
-            'actual'=>$actual
+            'langs'   => $data,
+            'actual'  => $actual,
+            'variant' => $this->variant,
         ]);
     }
 }

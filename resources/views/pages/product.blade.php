@@ -107,7 +107,7 @@
 {{-- ── Showcase sekce + lišty ─────────────────────────────────── --}}
 @foreach($content['sections'] ?? [] as $index => $section)
     @php
-        $isReversed = !empty($section['is_reversed']);
+        $isReversed = empty($section['is_reversed']);
         $imgId      = $section['image'] ?? null;
         $imgId      = is_array($imgId) ? ($imgId['id'] ?? $imgId['value'] ?? null) : $imgId;
     @endphp

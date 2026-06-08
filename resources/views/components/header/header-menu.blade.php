@@ -44,7 +44,7 @@
 
             {{-- Right: Language selector --}}
             <div class="d-flex align-items-center gap-3 me4-5">
-                <livewire:system.language-select wire:key="header-lang-desktop" />
+                <livewire:system.language-select variant="header" wire:key="header-lang-desktop" />
             </div>
         </div>
     </div>

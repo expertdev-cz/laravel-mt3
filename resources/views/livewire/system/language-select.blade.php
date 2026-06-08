@@ -1,15 +1,44 @@
-<div class="flex items-center gap-2">
-    @foreach ($langs as $item)
-        <a
-            wire:click.prevent="changeLang('{{ $item->locale }}','{{ request()->getRequestUri() }}')"
-            href="#"
-            class="inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-medium uppercase tracking-wide transition {{ app()->getLocale() === $item->locale ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100' }}"
-            title="{{ $item->name ?? strtoupper($item->locale) }}"
-        >
-            @if (!empty($item->icon))
-                <img src="/storage/{{ $item->icon }}" alt="{{ $item->locale }}" class="h-4 w-4 rounded-sm object-cover" />
+<div>
+@if($variant === 'footer')
+    {{-- Footer: aktuální jazyk + ikonky --}}
+    <span class="me-2 footer-current-lng">{{ strtoupper($actual->locale ?? '') }}</span>
+    <div class="footer-lang-icons">
+        @foreach($langs as $item)
+            @if($item->locale !== ($actual->locale ?? ''))
+                <a href="#" wire:click.prevent="changeLang('{{ $item->locale }}', '{{ request()->getRequestUri() }}')">
+                    @if(!empty($item->icon))
+                        <img src="/storage/{{ $item->icon }}" class="footer-lang-icon" data-lang="{{ strtoupper($item->locale) }}" height="48">
+                    @else
+                        <span class="footer-lang-icon">{{ strtoupper($item->locale) }}</span>
+                    @endif
+                </a>
             @endif
-            <span>{{ strtoupper($item->locale) }}</span>
-        </a>
-    @endforeach
+        @endforeach
+    </div>
+    <p class="footer-lng-switcher mb-0 underlined">{{ __('Přepnout jazyk (switch language)') }}</p>
+@else
+    {{-- Header: Bootstrap dropdown --}}
+    <div class="dropdown d-inline-block">
+        <button id="langDropdown" class="btn fs-5 fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="transition: opacity 0.18s ease; min-width: 3rem;">
+            {{ strtoupper($actual->locale ?? '') }}
+            <img src="{{ asset('assets/icons/select_icon.svg') }}" alt="Select" class="ms-1 mb-1" style="height: 8px;">
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="langDropdown">
+            @foreach($langs as $item)
+                @if($item->locale !== ($actual->locale ?? ''))
+                    <li>
+                        <a class="dropdown-item fs-5 text-dark-grey p-0" href="#"
+                            wire:click.prevent="changeLang('{{ $item->locale }}', '{{ request()->getRequestUri() }}')">
+                            @if(!empty($item->icon))
+                                <img src="/storage/{{ $item->icon }}" alt="{{ strtoupper($item->locale) }}" style="height: 45px;">
+                            @else
+                                {{ strtoupper($item->locale) }}
+                            @endif
+                        </a>
+                    </li>
+                @endif
+            @endforeach
+        </ul>
+    </div>
+@endif
 </div>

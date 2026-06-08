@@ -93,7 +93,7 @@ class PageRouteResource extends Resource
                 Checkbox::make('disable_auto_route')
                     ->label('Negenerovat automaticky')
                     ->helperText('Route sa bude generovat iba když bude obsahovat i slug! Použití jedine pri stránkach'),
-            ])->columns(1);
+            ])->columns(2);
     }
 
     public static function table(Table $table): Table

@@ -47,9 +47,12 @@ class ProductPageType
                 ->schema([
                     Repeater::make($arrayToSaveName . '.sections')
                         ->label('Sekce')
+                        ->itemLabel(fn(array $state): ?string =>
+                            ($state['big_heading'] ?? '') ?: ($state['subheading'] ?? 'Nová sekce')
+                        )
                         ->schema([
                             Checkbox::make('is_reversed')
-                                ->label('Obsah vlevo, obrázek vpravo'),
+                                ->label('Obrázek vlevo, obsah vpravo'),
                             TextInput::make('big_heading')
                                 ->label('Velký nadpis sekce (např. "Instalace")'),
                             TextInput::make('subheading')
@@ -58,6 +61,9 @@ class ProductPageType
                                 ->label('Text sekce'),
                             Repeater::make('parameters')
                                 ->label('Parametry (zpravidla 3 položky)')
+                                ->itemLabel(fn(array $state): ?string =>
+                                    ($state['label'] ?? '') ?: ($state['value'] ?? null)
+                                )
                                 ->schema([
                                     TextInput::make('label')->label('Popis (malý text)'),
                                     TextInput::make('value')->label('Hodnota (tučný text)'),

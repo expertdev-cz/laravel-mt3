@@ -25,9 +25,8 @@ class PageTypesHelper
     ];
 
     public static array $pageTypesLabels = [
-        'homepage' => 'Homepage',
+        'homepage' => 'Domovská stránka',
         'text' => 'Textová stránka',
-        'articles' => 'Blog',
         'contact' => 'Kontakt',
         'about-us' => 'O nás',
         'references' => 'Reference',
