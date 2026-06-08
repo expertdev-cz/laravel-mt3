@@ -34,7 +34,7 @@
                 <h6 class="footer-header fs-4">{{ __('Autorizovaný přístup') }}</h6>
                 <div class="d-flex email-form-gap border-bottom">
                     <input type="email" placeholder="{{ __('Zde zadejte e-mail.') }}" class="footer-email-input" id="footer-ap-email">
-                    <a href="{{ url('/autorizovany-pristup/prihlaseni') }}">
+                    <a href="{{ $apLoginUrl }}">
                         <button type="button" class="footer-submit-btn">{{ __('Přihlásit') }}</button>
                     </a>
                 </div>
@@ -45,7 +45,7 @@
                 </small>
                 <div class="d-flex email-form-gap mt-3">
                     <span class="footer-email-input" style="font-size: 1.2rem;">{{ __('Pokud u nás nemáte vytvořen Autorizovaný přístup') }} &rarr;</span>
-                    <a href="{{ url('/autorizovany-pristup/registrace') }}">
+                    <a href="{{ $apRegisterUrl }}">
                         <button type="button" class="footer-submit-btn2">{{ __('Vytvořit') }}</button>
                     </a>
                 </div>
@@ -57,7 +57,7 @@
             <div class="d-flex justify-content-center align-items-center">
                 <img src="{{ asset('assets/icons/obj_003.svg') }}" height="45px" alt="MT3">
             </div>
-            <a href="{{ url('/napiste-nam') }}">
+            <a href="{{ $inquiryUrl }}">
                 <div class="footer-chat-icon mb-1">
                     <img src="{{ asset('assets/icons/chat.svg') }}" alt="{{ __('Napište nám') }}" height="48">
                 </div>
