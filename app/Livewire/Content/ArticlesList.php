@@ -11,7 +11,7 @@ class ArticlesList extends Component
 {    
     use WithPagination;
 
-    protected string $paginationTheme = 'tailwind';
+    protected string $paginationTheme = 'bootstrap';
     
     public $isHp = false;
     private $tag = false;

@@ -20,18 +20,24 @@
     @stack('head')
     @livewireStyles
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    @yield('styles')
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
+<body>
     <x-header-menu />
 
-    <main>
+    <div class="ultra-wide-container">
         @yield('content')
-    </main>
+    </div>
 
     @yield('footer')
     <x-footer-scripts />
+    @stack('scripts')
     @livewireScripts
-    @yield('styles')
 </body>
 </html>

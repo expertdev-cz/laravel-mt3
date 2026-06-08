@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Vrstva_1" data-name="Vrstva 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 38">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #4d4d4d;
+      }
+    </style>
+  </defs>
+  <polygon class="cls-1" points="34.63 17.25 34.63 15.92 34.63 12.97 22.73 21.04 22.73 2.61 19 2.61 19 21.04 7.11 12.97 7.11 15.92 7.11 17.25 20.87 26.59 34.63 17.25"/>
+  <rect class="cls-1" x="5.87" y="28.58" width="30" height="4.03"/>
+</svg>

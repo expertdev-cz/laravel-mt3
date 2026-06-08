@@ -2,8 +2,8 @@
   <form wire:submit.prevent="submit" class="space-y-5" novalidate>
 
     <div class="hidden" aria-hidden="true">
-      <input wire:model.defer="company" type="text" name="company" tabindex="-1" autocomplete="off" />
-      <select wire:model.defer="topic_confirm" name="topic_confirm" tabindex="-1">
+      <input wire:model="company" type="text" name="company" tabindex="-1" autocomplete="off" />
+      <select wire:model="topic_confirm" name="topic_confirm" tabindex="-1">
         <option value="">--leave-empty--</option>
         <option value="x">x</option>
       </select>
@@ -12,14 +12,14 @@
     <div class="grid gap-5 md:grid-cols-2">
       <div>
         <label class="mb-1 block text-sm font-medium text-slate-700">Jméno</label>
-        <input wire:model.defer="name" name="name" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
+        <input wire:model="name" name="name" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
         @error('name')
           <span class="mt-1 block text-sm text-red-600">{{ $message }}</span>
         @enderror
       </div>
       <div>
         <label class="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
-        <input wire:model.defer="email" name="email" type="email" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
+        <input wire:model="email" name="email" type="email" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
         @error('email')
           <span class="mt-1 block text-sm text-red-600">{{ $message }}</span>
         @enderror
@@ -29,14 +29,14 @@
     <div class="grid gap-5 md:grid-cols-3">
       <div>
         <label class="mb-1 block text-sm font-medium text-slate-700">Prefix</label>
-        <select wire:model.defer="prefix" name="prefix" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none">
+        <select wire:model="prefix" name="prefix" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none">
           <option value="+420">+420</option>
           <option value="+421">+421</option>
         </select>
       </div>
       <div class="md:col-span-2">
         <label class="mb-1 block text-sm font-medium text-slate-700">Telefon</label>
-        <input wire:model.defer="phone" name="phone" type="tel" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
+        <input wire:model="phone" name="phone" type="tel" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
         @error('phone')
           <span class="mt-1 block text-sm text-red-600">{{ $message }}</span>
         @enderror
@@ -45,7 +45,7 @@
 
     <div>
       <label class="mb-1 block text-sm font-medium text-slate-700">Zpráva</label>
-      <textarea wire:model.defer="content" name="content" rows="5" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none"></textarea>
+      <textarea wire:model="content" name="content" rows="5" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none"></textarea>
       @error('content')
         <span class="mt-1 block text-sm text-red-600">{{ $message }}</span>
       @enderror

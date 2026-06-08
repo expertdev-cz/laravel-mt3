@@ -2,7 +2,7 @@
     <form wire:submit.prevent="submit" class="space-y-5" novalidate>
         <div>
             <label class="mb-1 block text-sm font-medium text-slate-700">Login nebo e-mail</label>
-            <input wire:model.defer="login" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
+            <input wire:model="login" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
             @error('login')
                 <span class="mt-1 block text-sm text-red-600">{{ $message }}</span>
             @enderror
@@ -10,7 +10,7 @@
 
         <div>
             <label class="mb-1 block text-sm font-medium text-slate-700">Heslo</label>
-            <input wire:model.defer="password" type="password" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
+            <input wire:model="password" type="password" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
             @error('password')
                 <span class="mt-1 block text-sm text-red-600">{{ $message }}</span>
             @enderror

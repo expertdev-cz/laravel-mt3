@@ -3,23 +3,29 @@
 @section('seo')<x-seo-block :seo="$page->seo" :seo-item="$page"/>@endsection
 
 @section('content')
-<section class="bg-slate-50 py-16 sm:py-24">
-    <div class="mx-auto max-w-5xl px-6">
-        <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
-            @if(data_get($page->content, 'title'))
-                <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl">{{ data_get($page->content, 'title') }}</h1>
-            @endif
-            @if(data_get($page->content, 'subtitle'))
-                <p class="mt-6 max-w-2xl text-base leading-7 text-slate-600">{{ data_get($page->content, 'subtitle') }}</p>
-            @endif
-            @if(data_get($page->content, 'intro'))
-                <div class="prose prose-slate mt-8 max-w-none">{!! data_get($page->content, 'intro') !!}</div>
-            @endif
-        </div>
-
-        <div class="mt-8">
-            <livewire:authorized-access.downloads-list page-type="authorized-access-technical-sheets" />
-        </div>
+<section class="d-flex align-items-center pt-5 pb-5">
+    <div class="container-fluid container-custom">
+        <div class="showcase-spacer"></div>
+        @if(data_get($page->content, 'title'))
+            <h1 class="text-dark-grey mb-3 scroll-in text-page-h1">{{ data_get($page->content, 'title') }}</h1>
+        @endif
+        @if(data_get($page->content, 'subtitle'))
+            <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ data_get($page->content, 'subtitle') }}</p>
+        @endif
+        @if(data_get($page->content, 'intro'))
+            <div class="fw-light text-dark-grey mt-3 scroll-in">{!! data_get($page->content, 'intro') !!}</div>
+        @endif
     </div>
 </section>
+
+<section class="py-4 mg-bottom-5rm">
+    <hr class="ap-divider">
+    <div class="container-fluid container-custom">
+        <livewire:authorized-access.downloads-list page-type="authorized-access-technical-sheets" />
+    </div>
+</section>
+@endsection
+
+@section('footer')
+<x-footer />
 @endsection

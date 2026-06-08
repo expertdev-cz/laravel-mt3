@@ -15,6 +15,7 @@ use App\Filament\Modules\PageTypes\ContactPageType;
 use App\Filament\Modules\PageTypes\ReferenceDetailPageType;
 use App\Filament\Modules\PageTypes\ReferencesPageType;
 use App\Filament\Modules\PageTypes\TechnologiesPageType;
+use App\Filament\Modules\PageTypes\ProductPageType;
 use App\Filament\Modules\PageTypes\TextPageType;
 use App\Filament\Modules\SeoModule;
 use App\Filament\Resources\System\PageResource\Pages;
@@ -69,6 +70,7 @@ class PageResource extends Resource
                                 'authorized-access-home' => AuthorizedAccessHomePageType::getDefinition(),
                                 'authorized-access-technical-sheets' => AuthorizedAccessTechnicalSheetsPageType::getDefinition(),
                                 'text' => TextPageType::getDefinition(),
+                                'product' => ProductPageType::getDefinition(),
                                 default => [],
                             })->key('dynamicTypeFields')
                     ])->columns(1),

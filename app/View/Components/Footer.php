@@ -3,24 +3,29 @@
 namespace App\View\Components;
 
 use Closure;
+use Datlechin\FilamentMenuBuilder\Models\Menu;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Footer extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct(public $showText)
+    public function __construct(public $showText = true)
     {
         //
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
-        return view('components.footer.footer');
+        $locale = app()->currentLocale();
+
+        $footerMenus = [];
+        foreach (['footer-1', 'footer-2', 'footer-3'] as $location) {
+            $menu = Menu::location($location . '-' . $locale) ?? Menu::location($location);
+            $footerMenus[$location] = $menu;
+        }
+
+        return view('components.footer.footer', [
+            'footerMenus' => $footerMenus,
+        ]);
     }
 }
