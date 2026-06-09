@@ -2,15 +2,38 @@
 
 namespace App\Filament\Modules\PageTypes;
 
-use App\Filament\Modules\ButtonModule;
+use App\Models\PageRouteUrls;
 use App\Filament\Modules\ImageModule;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Utilities\Get;
 
 class ReferencesPageType
 {
+    protected static function referenceDetailOptions(?string $locale = null): array
+    {
+        return PageRouteUrls::query()
+            ->whereHas('page', fn ($q) => $q->where('type', 'reference-detail'))
+            ->when(!blank($locale), fn ($q) => $q->where('locale', $locale))
+            ->get(['id', 'slug'])
+            ->mapWithKeys(fn ($r) => [(string) $r->id => $r->slug])
+            ->all();
+    }
+
+    protected static function referenceDetailSelect(string $name, Get $get): Select
+    {
+        return Select::make($name)
+            ->label('Odkaz na detail reference')
+            ->options(fn (Get $get) => static::referenceDetailOptions($get('lang_locale')))
+            ->searchable()
+            ->preload()
+            ->default(null)
+            ->placeholder('— vyberte stránku detailu —');
+    }
+
     public static function getDefinition(string $arrayToSaveName = 'content'): array
     {
         return [
@@ -31,7 +54,13 @@ class ReferencesPageType
                         ->label('Lokace'),
                     TextInput::make($arrayToSaveName . '.featured.description')
                         ->label('Popis'),
-                    ButtonModule::getDefinition($arrayToSaveName . '.featured.button', 'Odkaz na detail'),
+                    Select::make($arrayToSaveName . '.featured.page_route_url_id')
+                        ->label('Odkaz na detail reference')
+                        ->options(fn (Get $get) => static::referenceDetailOptions($get('lang_locale')))
+                        ->searchable()
+                        ->preload()
+                        ->default(null)
+                        ->placeholder('— vyberte stránku detailu —'),
                 ])
                 ->columns(1),
 
@@ -46,7 +75,13 @@ class ReferencesPageType
                                 ->label('Lokace'),
                             TextInput::make('description')
                                 ->label('Popis'),
-                            ButtonModule::getDefinition('button', 'Odkaz na detail'),
+                            Select::make('page_route_url_id')
+                                ->label('Odkaz na detail reference')
+                                ->options(fn (Get $get) => static::referenceDetailOptions($get('lang_locale')))
+                                ->searchable()
+                                ->preload()
+                                ->default(null)
+                                ->placeholder('— vyberte stránku detailu —'),
                         ])
                         ->default([])
                         ->collapsed()

@@ -68,6 +68,7 @@ body {
     font-family: 'Inter28', sans-serif !important;
     font-weight: 300;
     background-color: #EDEEF0 !important;
+    overflow-x: hidden;
 }
 
 body.scroll-disabled {

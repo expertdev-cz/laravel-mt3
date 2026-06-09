@@ -29,10 +29,10 @@
         <div class="reference-carousel position-relative">
             <div class="carousel-track-container">
                 <div class="carousel-track d-flex align-items-center" id="referenceCarouselTrack">
-                    @foreach($page->content['carousel_images'] as $carouselItem)
-                        @if(!empty($carouselItem['image']))
+                    @foreach($page->content['carousel_images'] as $mediaId)
+                        @if(!empty($mediaId))
                         <div class="carousel-item-custom">
-                            <x-curator-glider :media="$carouselItem['image']" class="carousel-image" />
+                            <x-curator-glider :media="$mediaId" class="carousel-image" />
                         </div>
                         @endif
                     @endforeach

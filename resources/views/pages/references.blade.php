@@ -24,7 +24,9 @@
 
         {{-- Hlavní reference --}}
         @php
-            $featuredUrl = !empty($page->content['featured']['button']['buttonLink']) ? formatPageLink($page->content['featured']['button']['buttonLink']) : '#';
+            $featuredUrl = !empty($page->content['featured']['page_route_url_id'])
+                ? formatPageLink(['pageRouteUrl' => $page->content['featured']['page_route_url_id']])
+                : '#';
         @endphp
         @if(!empty($page->content['featured']['image']))
         <div class="row mb-4">
@@ -51,7 +53,9 @@
         <div class="row g-4">
             @foreach($page->content['items'] as $item)
                 @php
-                    $itemUrl = !empty($item['button']['buttonLink']) ? formatPageLink($item['button']['buttonLink']) : '#';
+                    $itemUrl = !empty($item['page_route_url_id'])
+                        ? formatPageLink(['pageRouteUrl' => $item['page_route_url_id']])
+                        : '#';
                 @endphp
                 @if(!empty($item['image']))
                 <div class="col-md-4">

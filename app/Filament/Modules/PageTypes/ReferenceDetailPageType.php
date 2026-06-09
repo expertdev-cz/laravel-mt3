@@ -2,8 +2,7 @@
 
 namespace App\Filament\Modules\PageTypes;
 
-use App\Filament\Modules\ImageModule;
-use Filament\Forms\Components\Repeater;
+use App\Filament\Modules\ImagesModule;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Fieldset;
@@ -25,16 +24,11 @@ class ReferenceDetailPageType
 
             Fieldset::make('Carousel obrázků')
                 ->schema([
-                    Repeater::make($arrayToSaveName . '.carousel_images')
-                        ->label('Obrázky carouselu')
-                        ->itemLabel(fn(array $state): string => 'Obrázek')
-                        ->schema([
-                            ImageModule::getDefinition('image', 'Obrázek', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
-                        ])
-                        ->default([])
-                        ->collapsed()
-                        ->addActionLabel('Přidat obrázek')
-                        ->columns(1),
+                    ImagesModule::getDefinition(
+                        $arrayToSaveName . '.carousel_images',
+                        'Obrázky carouselu',
+                        ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']
+                    ),
                 ])
                 ->columns(1),
 
