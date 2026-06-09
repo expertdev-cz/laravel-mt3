@@ -29,13 +29,14 @@
     @yield('styles')
 </head>
 <body>
-    <x-header-menu />
-
     <div class="ultra-wide-container">
+        @unless(View::hasSection('header_in_hero'))
+            <x-header-menu />
+        @endunless
         @yield('content')
+        @yield('footer')
     </div>
 
-    @yield('footer')
     <x-footer-scripts />
     @stack('scripts')
     @livewireScripts

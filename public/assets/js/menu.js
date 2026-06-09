@@ -53,6 +53,7 @@ function preventScrollKeys(e) {
 }
 
 // Handle submenu toggle
+if (vyrobkyDropdown) {
 vyrobkyDropdown.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -94,6 +95,7 @@ function closeSubmenu() {
         navbar.classList.remove('white-bg');
     }
 }
+} // end if (vyrobkyDropdown)
 
 // Scroll behavior
 window.addEventListener('scroll', function() {

@@ -2,16 +2,20 @@
 @section('title', $page->title)
 @section('seo')<x-seo-block :seo="$page->seo" :seo-item="$page"/>@endsection
 
+@section('header_in_hero', true)
+
 @section('content')
 {{-- Hero sekce s videem --}}
 <section class="hp-video position-relative">
-    @if(!empty($page->content['hero_video_file']))
+    <x-header-menu />
+    @if(!empty($page->content['hero_video_file']) || !empty($page->content['hero_video_poster']))
         <video class="position-absolute top-0 start-0 w-100 h-100 video-bg hero-section" autoplay muted loop
             @if(!empty($page->content['hero_video_poster'])) poster="{{ \App\Services\Content\MediaService::getMediaUrl($page->content['hero_video_poster']) }}" @endif>
-            <source src="{{ \App\Services\Content\MediaService::getMediaUrl($page->content['hero_video_file']) }}" type="video/mp4">
+            @if(!empty($page->content['hero_video_file']))
+                <source src="{{ \App\Services\Content\MediaService::getMediaUrl($page->content['hero_video_file']) }}" type="video/mp4">
+            @endif
         </video>
     @endif
-    <div class="blur-overlay-hp"></div>
 </section>
 
 {{-- Showcase bloky --}}

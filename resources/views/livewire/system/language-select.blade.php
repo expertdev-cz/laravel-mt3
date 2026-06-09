@@ -1,13 +1,14 @@
-<div>
+<div class="d-flex align-items-center gap-2">
 @if($variant === 'footer')
     {{-- Footer: aktuální jazyk + ikonky --}}
-    <span class="me-2 footer-current-lng">{{ strtoupper($actual->locale ?? '') }}</span>
-    <div class="footer-lang-icons">
+    <span class="footer-current-lng" id="footer-current-lng">{{ strtoupper($actual->locale ?? '') }}</span>
+    <div class="footer-lang-icons" id="footer-lang-icons">
         @foreach($langs as $item)
             @if($item->locale !== ($actual->locale ?? ''))
-                <a href="#" wire:click.prevent="changeLang('{{ $item->locale }}', '{{ request()->getRequestUri() }}')">
+                <a href="#" wire:click.prevent="changeLang('{{ $item->locale }}', '{{ request()->getRequestUri() }}')"
+                   data-lang="{{ strtoupper($item->locale) }}">
                     @if(!empty($item->icon))
-                        <img src="/storage/{{ $item->icon }}" class="footer-lang-icon" data-lang="{{ strtoupper($item->locale) }}" height="48">
+                        <img src="/storage/{{ $item->icon }}" class="footer-lang-icon" height="48">
                     @else
                         <span class="footer-lang-icon">{{ strtoupper($item->locale) }}</span>
                     @endif
@@ -15,7 +16,7 @@
             @endif
         @endforeach
     </div>
-    <p class="footer-lng-switcher mb-0 underlined">{{ __('Přepnout jazyk (switch language)') }}</p>
+    <p class="footer-lng-switcher mb-0 underlined" id="footer-lng-switcher-btn">{{ __('Přepnout jazyk (switch language)') }}</p>
 @else
     {{-- Header: Bootstrap dropdown --}}
     <div class="dropdown d-inline-block">
