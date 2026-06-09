@@ -4,6 +4,7 @@ namespace App\Filament\Modules\PageTypes;
 
 use App\Filament\Modules\ButtonModule;
 use App\Filament\Modules\ImageModule;
+use App\Filament\Modules\ImagesModule;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -26,6 +27,7 @@ class HomepagePageType
                 ->schema([
                     Repeater::make($arrayToSaveName . '.showcases')
                         ->label('Showcase sekce')
+                        ->itemLabel(fn ($state) => $state['product_title'] ?? 'Showcase blok')
                         ->schema([
                             Checkbox::make('is_reversed')
                                 ->label('Obrázek vpravo'),
@@ -46,6 +48,7 @@ class HomepagePageType
                             ButtonModule::getDefinition('button', 'Tlačítko produktu'),
                             Repeater::make('parameters')
                                 ->label('Horní řádek parametrů')
+                                ->itemLabel(fn ($state) => $state['label'] ?? 'Parametr')
                                 ->schema([
                                     TextInput::make('label')
                                         ->label('Název parametru'),
@@ -58,6 +61,7 @@ class HomepagePageType
                                 ->columns(1),
                             Repeater::make('icons')
                                 ->label('Ikony spodního řádku')
+                                ->itemLabel(fn ($state) => 'Ikona')
                                 ->schema([
                                     ImageModule::getDefinition('default_icon', 'Výchozí ikona', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                                     ImageModule::getDefinition('hover_icon', 'Hover ikona', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
@@ -77,15 +81,11 @@ class HomepagePageType
 
             Fieldset::make('Infografiky a spodní CTA')
                 ->schema([
-                    Repeater::make($arrayToSaveName . '.info_cards')
-                        ->label('Infografiky')
-                        ->schema([
-                            ImageModule::getDefinition('image', 'Obrázek karty', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
-                        ])
-                        ->default([])
-                        ->collapsed()
-                        ->addActionLabel('Přidat infografiku')
-                        ->columns(1),
+                    ImagesModule::getDefinition(
+                        $arrayToSaveName . '.info_cards',
+                        'Infografiky (max. 5)',
+                        ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']
+                    )->maxItems(5),
                     TextInput::make($arrayToSaveName . '.bottom_title')
                         ->label('Spodní nadpis'),
                     Textarea::make($arrayToSaveName . '.bottom_text_first')

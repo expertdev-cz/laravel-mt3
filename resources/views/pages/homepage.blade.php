@@ -109,12 +109,12 @@
 <section class="info-cards-section">
     <div class="container-fluid container-custom scroll-in">
         <div class="row justify-content-center cards-container">
-            @foreach($page->content['info_cards'] as $card)
-                @if(!empty($card['image']))
+            @foreach($page->content['info_cards'] as $mediaId)
+                @if(!empty($mediaId))
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                     <div class="card h-100 border-0 shadow-sm info-card">
                         <div class="card-body p-0">
-                            <x-curator-glider :media="$card['image']" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 25px;" />
+                            <x-curator-glider :media="$mediaId" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 25px;" />
                         </div>
                     </div>
                 </div>
