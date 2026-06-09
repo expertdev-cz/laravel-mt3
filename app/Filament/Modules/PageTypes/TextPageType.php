@@ -19,6 +19,7 @@ class TextPageType
                 RichEditor::make($arrayToSaveName . '.pageContent')->label('Obsah stránky'),
                 Repeater::make($arrayToSaveName . '.sections')
                     ->label('Sekce stránky')
+                    ->itemLabel(fn(array $state): ?string => ($state['title'] ?? '') ?: ($state['layout'] ?? null))
                     ->schema([
                         Select::make('layout')
                             ->label('Rozložení')
@@ -40,6 +41,7 @@ class TextPageType
                             ->label('Alt obrázku'),
                         Repeater::make('items')
                             ->label('Položky seznamu')
+                            ->itemLabel(fn(array $state): ?string => ($state['title'] ?? '') ?: null)
                             ->schema([
                                 TextInput::make('title')
                                     ->label('Položka'),

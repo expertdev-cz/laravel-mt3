@@ -47,6 +47,7 @@ class TechnologiesPageType
                         ->rows(3),
                     Repeater::make($arrayToSaveName . '.materials')
                         ->label('Tabulka materiálů')
+                        ->itemLabel(fn(array $state): ?string => ($state['label'] ?? '') ?: null)
                         ->schema([
                             Select::make('type')
                                 ->label('Typ řádku')

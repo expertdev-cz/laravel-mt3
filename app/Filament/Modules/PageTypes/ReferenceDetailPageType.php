@@ -27,6 +27,7 @@ class ReferenceDetailPageType
                 ->schema([
                     Repeater::make($arrayToSaveName . '.carousel_images')
                         ->label('Obrázky carouselu')
+                        ->itemLabel(fn(array $state): string => 'Obrázek')
                         ->schema([
                             ImageModule::getDefinition('image', 'Obrázek', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                         ])

@@ -38,6 +38,7 @@ class ContactPageType
                             TextInput::make('phone')
                                 ->label('Telefon'),
                         ])
+                        ->itemLabel(fn(array $state): ?string => trim(($state['name'] ?? '') . ($state['department'] ? ' — ' . $state['department'] : '')) ?: null)
                         ->default([])
                         ->collapsed()
                         ->addActionLabel('Přidat kartu')
@@ -58,6 +59,9 @@ class ContactPageType
                         ->url(),
                     TextInput::make($arrayToSaveName . '.gps_label')
                         ->label('GPS text'),
+                    Textarea::make($arrayToSaveName . '.company_info_text')
+                        ->label('IČO, DIČ, zápis do OR (každý údaj na nový řádek)')
+                        ->rows(5),
                     ImageModule::getDefinition($arrayToSaveName . '.map_image', 'Mapa / SVG', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                 ])
                 ->columns(1),

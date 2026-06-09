@@ -2,8 +2,11 @@
 @section('title', $page->title)
 @section('seo')<x-seo-block :seo="$page->seo" :seo-item="$page"/>@endsection
 
+@php
+    $heroBg = !empty($page->content['background_image']) ? \App\Services\Content\MediaService::getMediaUrl($page->content['background_image']) : null;
+@endphp
 @section('content')
-<section class="about-section position-relative pt-5">
+<section class="about-section position-relative pt-5" @if($heroBg)style="background: url('{{ $heroBg }}') no-repeat center 20%; background-size: cover;"@endif>
     <div class="pt-5">
 
         {{-- Row 1: Titulek firmy --}}

@@ -115,6 +115,7 @@ class ProductPageType
                     ImageModule::getDefinition($arrayToSaveName . '.table_col2_image', 'Obrázek nad 2. sloupcem', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                     Repeater::make($arrayToSaveName . '.table_rows')
                         ->label('Řádky tabulky')
+                        ->itemLabel(fn(array $state): ?string => ($state['param'] ?? '') ?: null)
                         ->schema([
                             TextInput::make('param')->label('Parametr'),
                             TextInput::make('col1_value')->label('Hodnota 1. sloupce'),

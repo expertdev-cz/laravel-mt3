@@ -39,6 +39,7 @@ class ReferencesPageType
                 ->schema([
                     Repeater::make($arrayToSaveName . '.items')
                         ->label('Položky gridu')
+                        ->itemLabel(fn(array $state): ?string => ($state['location'] ?? '') ?: ($state['description'] ?? null))
                         ->schema([
                             ImageModule::getDefinition('image', 'Obrázek reference', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                             TextInput::make('location')

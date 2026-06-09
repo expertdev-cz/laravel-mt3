@@ -2853,7 +2853,6 @@ a.product-title:hover {
     display: flex;
     min-height: 520px;
     background-color: #1c1c1c;
-    background-image: url('/assets/images/kontakty_obr_01.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -3005,8 +3004,6 @@ a.product-title:hover {
 
    /* About page styles */
         .about-section {
-            background: url("/assets/images/CLV-tit-01.jpg") no-repeat center 20%;
-            background-size: cover;
             max-height: 400vh;
             width: 100%;
         }
