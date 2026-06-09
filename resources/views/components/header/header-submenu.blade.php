@@ -64,7 +64,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="#" class="text-decoration-none no-underline">
+                            <a href="/next" class="text-decoration-none no-underline">
                                 <div class="p-3 text-start">
                                     <div class="product-title text-dark-grey">Next</div>
                                     <div class="product-subtitle mb-4 text-dark-grey">ostatní produkty</div>
