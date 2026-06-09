@@ -4,6 +4,7 @@ namespace App\Filament\Modules\PageTypes;
 
 use App\Filament\Modules\ImageModule;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Fieldset;
@@ -47,10 +48,18 @@ class TechnologiesPageType
                     Repeater::make($arrayToSaveName . '.materials')
                         ->label('Tabulka materiálů')
                         ->schema([
+                            Select::make('type')
+                                ->label('Typ řádku')
+                                ->options([
+                                    'row' => 'Datový řádek',
+                                    'header' => 'Nadpis (záhlaví / sekce)',
+                                ])
+                                ->default('row')
+                                ->required(),
                             TextInput::make('label')
                                 ->label('Materiál / parametr'),
                             TextInput::make('value')
-                                ->label('Hodnota'),
+                                ->label('Hodnota (prázdné pro nadpis sekce)'),
                         ])
                         ->default([])
                         ->collapsed()
