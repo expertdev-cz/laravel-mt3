@@ -6,6 +6,7 @@ use App\Models\PageRouteUrls;
 use App\Models\System\Language;
 use App\Models\System\PageRoute;
 use Awcodes\Curator\CuratorPlugin;
+use Awcodes\Curator\Facades\Curator;
 use Awcodes\Curator\Resources\MediaResource;
 use Datlechin\FilamentMenuBuilder\FilamentMenuBuilderPlugin;
 use Datlechin\FilamentMenuBuilder\MenuPanel\ModelMenuPanel;
@@ -33,6 +34,8 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 class AdminPanelProvider extends PanelProvider
 {
     public function boot(){
+        Curator::configure()->maxSize(20480);
+
         Filament::serving(function () {
             Filament::registerRenderHook(
                 'panels::user-menu.before', // Přidá tlačítko vedle loga v horním panelu

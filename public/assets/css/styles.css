@@ -896,35 +896,35 @@ a.product-title:hover {
 }
 
 .scroll-background {
-    background-image: url('//assets/images/scroll-pozadi-nove.jpg');
+    background-image: url('/assets/images/scroll-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .smart-background {
-    background-image: url('//assets/images/smart-pozadi-nove.jpg');
+    background-image: url('/assets/images/smart-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .if-background {
-    background-image: url('//assets/images/if-pozadi-nove.jpg');
+    background-image: url('/assets/images/if-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .next-background {
-    background-image: url('//assets/images/next-pozadi-nove.jpg');
+    background-image: url('/assets/images/next-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .poster-background {
-    background-image: url('//assets/images/poster-pozadi-nove.jpg');
+    background-image: url('/assets/images/poster-pozadi-nove.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -937,42 +937,42 @@ a.product-title:hover {
 }
 
 .info-card-bg-image-01 {
-    background-image: url('//assets/images/poster-pozadi-nove.jpg');
+    background-image: url('/assets/images/poster-pozadi-nove.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .info-card-bg-image-02 {
-    background-image: url('//assets/images/scroll-pozadi-nove.jpg');
+    background-image: url('/assets/images/scroll-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .info-card-bg-image-03 {
-    background-image: url('//assets/images/smart-pozadi-nove.jpg');
+    background-image: url('/assets/images/smart-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .info-card-bg-image-04 {
-    background-image: url('//assets/images/if-pozadi-nove.jpg');
+    background-image: url('/assets/images/if-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .info-card-bg-image-05 {
-    background-image: url('//assets/images/next-pozadi-nove.jpg');
+    background-image: url('/assets/images/next-pozadi-nove.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .scroll-background-image {
-    background-image: url('//assets/images/Scroll-pozadi.jpg');
+    background-image: url('/assets/images/Scroll-pozadi.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1224,7 +1224,6 @@ a.product-title:hover {
 .hp-video {
     height: 50vw;
     max-height: 1080px;
-    z-index: 999999;
 }
 
 .me-12 {

@@ -16,6 +16,7 @@ use App\Filament\Modules\PageTypes\ReferenceDetailPageType;
 use App\Filament\Modules\PageTypes\ReferencesPageType;
 use App\Filament\Modules\PageTypes\TechnologiesPageType;
 use App\Filament\Modules\PageTypes\ProductPageType;
+use App\Filament\Modules\PageTypes\NextPageType;
 use App\Filament\Modules\PageTypes\TextPageType;
 use App\Filament\Modules\SeoModule;
 use App\Filament\Resources\System\PageResource\Pages;
@@ -32,6 +33,8 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
@@ -71,6 +74,7 @@ class PageResource extends Resource
                                 'authorized-access-technical-sheets' => AuthorizedAccessTechnicalSheetsPageType::getDefinition(),
                                 'text' => TextPageType::getDefinition(),
                                 'product' => ProductPageType::getDefinition(),
+                                'next' => NextPageType::getDefinition(),
                                 default => [],
                             })->key('dynamicTypeFields')
                     ])->columns(1),
@@ -96,7 +100,19 @@ class PageResource extends Resource
                 CheckboxColumn::make('active')->label('Aktivní'),
             ])
             ->filters([
-                //
+                SelectFilter::make('type')
+                    ->label('Šablona')
+                    ->options(\App\Helpers\PageTypesHelper::$pageTypesLabels)
+                    ->placeholder('Všechny šablony'),
+                SelectFilter::make('lang_locale')
+                    ->label('Jazyk')
+                    ->options(fn () => \App\Models\System\Page::query()->distinct()->pluck('lang_locale', 'lang_locale')->sort()->all())
+                    ->placeholder('Všechny jazyky'),
+                TernaryFilter::make('active')
+                    ->label('Aktivní')
+                    ->trueLabel('Pouze aktivní')
+                    ->falseLabel('Pouze neaktivní')
+                    ->placeholder('Vše'),
             ])
             ->actions([
                 Action::make('Zobrazit')

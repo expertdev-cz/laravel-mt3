@@ -3,6 +3,7 @@
 namespace App\Filament\Modules\PageTypes;
 
 use App\Filament\Modules\ImageModule;
+use App\Models\PageRouteUrls;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -10,9 +11,19 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Utilities\Get;
 
 class ProductPageType
 {
+    protected static function pageOptions(?string $locale = null): array
+    {
+        return PageRouteUrls::query()
+            ->when(!blank($locale), fn ($q) => $q->where('locale', $locale))
+            ->get(['id', 'slug'])
+            ->mapWithKeys(fn ($r) => [(string) $r->id => $r->slug])
+            ->all();
+    }
+
     public static function getDefinition(string $arrayToSaveName = 'content'): array
     {
         return [
@@ -27,7 +38,6 @@ class ProductPageType
                         ->default('classic')
                         ->required(),
                     ImageModule::getDefinition($arrayToSaveName . '.hero_video_file', 'Video hero sekce', ['video/mp4', 'video/webm']),
-                    ImageModule::getDefinition($arrayToSaveName . '.hero_video_poster', 'Poster videa (náhledový obrázek)', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                     TextInput::make($arrayToSaveName . '.hero_eyebrow')
                         ->label('Malý text nad nadpisem (např. "Poster")'),
                     TextInput::make($arrayToSaveName . '.hero_heading')
@@ -37,9 +47,13 @@ class ProductPageType
                         ->rows(2),
                     TextInput::make($arrayToSaveName . '.hero_price')
                         ->label('Cena (např. "Od 65 000 Kč")'),
-                    TextInput::make($arrayToSaveName . '.hero_inquiry_url')
-                        ->label('URL tlačítka "Napište nám"')
-                        ->placeholder('/napiste-nam'),
+                    Select::make($arrayToSaveName . '.hero_inquiry_page_route_url_id')
+                        ->label('Stránka tlačítka "Napište nám"')
+                        ->options(fn (Get $get) => static::pageOptions($get('lang_locale')))
+                        ->searchable()
+                        ->preload()
+                        ->default(null)
+                        ->placeholder('— vyberte stránku —'),
                 ])
                 ->columns(1),
 
@@ -85,9 +99,13 @@ class ProductPageType
                 ->schema([
                     TextInput::make($arrayToSaveName . '.bar_reference_text')
                         ->label('Text reference (např. "Podívejte se na realizace.")'),
-                    TextInput::make($arrayToSaveName . '.bar_reference_url')
-                        ->label('URL na reference')
-                        ->placeholder('/reference'),
+                    Select::make($arrayToSaveName . '.bar_reference_page_route_url_id')
+                        ->label('Stránka reference (odkaz)')
+                        ->options(fn (Get $get) => static::pageOptions($get('lang_locale')))
+                        ->searchable()
+                        ->preload()
+                        ->default(null)
+                        ->placeholder('— vyberte stránku —'),
                     TextInput::make($arrayToSaveName . '.bar_order_text')
                         ->label('Text objednávky')
                         ->default('Objednávku můžete realizovat s naším obchodním oddělením.'),
@@ -107,6 +125,9 @@ class ProductPageType
                         ->label('Velký nadpis tabulky (např. "Rozměry")'),
                     TextInput::make($arrayToSaveName . '.table_subtitle')
                         ->label('Podnadpis tabulky'),
+                    TextInput::make($arrayToSaveName . '.table_param_label')
+                        ->label('Záhlaví sloupce parametrů')
+                        ->default('Parametr'),
                     TextInput::make($arrayToSaveName . '.table_col1_label')
                         ->label('Záhlaví 1. sloupce'),
                     TextInput::make($arrayToSaveName . '.table_col2_label')

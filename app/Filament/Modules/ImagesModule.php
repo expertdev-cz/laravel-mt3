@@ -14,7 +14,8 @@ class ImagesModule
         $curator = CuratorPicker::make($name)
             ->label($label)
             ->default([])
-            ->multiple();
+            ->multiple()
+            ->maxSize(20480);
 
         if ($allowedFormats) {
             $curator->acceptedFileTypes($allowedFormats);

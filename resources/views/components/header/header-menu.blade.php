@@ -26,8 +26,9 @@
                             $route = $item->url ?: '#';
                         }
                         $hasChildren = $item->menuItems && $item->menuItems->count() > 0;
+                        $isSubmenuTrigger = $hasChildren || str_contains($item->classes ?? '', 'has-submenu');
                     @endphp
-                    @if($hasChildren)
+                    @if($isSubmenuTrigger)
                         <li class="nav-item dropdown">
                             <a class="nav-link px-4 text-dark-grey" href="#" id="vyrobkyDropdown" role="button" data-bs-toggle="dropdown">
                                 {{ $item->title }}
@@ -52,47 +53,9 @@
 
 {{-- Mega submenu for items with children --}}
 @foreach(($menuItems ?? collect()) as $item)
-    @if($item->menuItems && $item->menuItems->count() > 0)
-    <div id="submenu-level2" class="dropdown-menu-custom">
-        <div class="dropdown-menu-bg">
-            <div class="container-fw mx-0">
-                <div class="submenu-content">
-                    <div class="submenu-view">
-                        <div class="category-header d-flex text-dark-grey justify-content-center">{{ $item->title }}</div>
-                        <div class="grid-5 ms-70">
-                            @foreach($item->menuItems as $child)
-                                @php
-                                    $childItem = $child?->linkable;
-                                    if ($childItem instanceof \App\Models\PageRouteUrls) {
-                                        $childRoute = localizedRoute($childItem->pageRoute->route_name, [data_get($childItem, 'slug')]);
-                                    } elseif ($childItem instanceof \App\Models\System\PageRoute) {
-                                        $childRoute = localizedRoute($childItem->route_name);
-                                    } else {
-                                        $childRoute = $child->url ?: '#';
-                                    }
-                                @endphp
-                                <div>
-                                    <a href="{{ $childRoute }}" class="text-decoration-none no-underline">
-                                        <div class="product-category">
-                                            <div class="product-title text-dark-grey">{{ $child->title }}</div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="submenu-switcher">
-                        <div class="switcher-container gap-5 d-flex justify-content-end align-items-center me4-5">
-                            <a href="mailto:obchod.project@mt3.cz" class="text-dark-grey fnt-size-125" style="text-decoration: none;">
-                                Vaše preference <img src="{{ asset('assets/icons/obj_015.svg') }}" alt="" style="height: 1em; vertical-align: middle; margin-bottom:8px;">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @break
+    @if(($item->menuItems && $item->menuItems->count() > 0) || str_contains($item->classes ?? '', 'has-submenu'))
+        <x-header.header-submenu />
+        @break
     @endif
 @endforeach
 

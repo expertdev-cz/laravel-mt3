@@ -22,6 +22,7 @@ class PageTypesHelper
         'authorized-access-home' => PagesController::class,
         'authorized-access-technical-sheets' => PagesController::class,
         'product' => PagesController::class,
+        'next' => PagesController::class,
     ];
 
     public static array $pageTypesLabels = [
@@ -38,6 +39,7 @@ class PageTypesHelper
         'authorized-access-home' => 'AP - Rozcestník',
         'authorized-access-technical-sheets' => 'AP - Technické listy',
         'product' => 'Produktová stránka',
+        'next' => 'Next',
     ];
 
     public static array $pageWithAllowedSubpages = [

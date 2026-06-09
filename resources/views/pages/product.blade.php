@@ -3,56 +3,40 @@
 @section('seo')<x-seo-block :seo="$page->seo" :seo-item="$page"/>@endsection
 
 @section('content')
-@php
-    $content    = $page->content ?? [];
-    $heroType   = $content['hero_type'] ?? 'classic';
-    $heroClass  = $heroType === 'alternative' ? 'video-hero-alt' : 'video-hero-poster';
-    $descClass  = $heroType === 'alternative' ? 'video-description' : 'video-description-right';
-    $videoId    = $content['hero_video_file'] ?? null;
-    $posterId   = $content['hero_video_poster'] ?? null;
-    $videoUrl   = $videoId  ? \App\Services\Content\MediaService::getMediaUrl($videoId)  : null;
-    $posterUrl  = $posterId ? \App\Services\Content\MediaService::getMediaUrl($posterId) : null;
-    $inquiryUrl = $content['hero_inquiry_url'] ?? '/napiste-nam';
-    $barRefText  = $content['bar_reference_text']  ?? 'Podívejte se na realizace.';
-    $barRefUrl   = $content['bar_reference_url']   ?? '/reference';
-    $barOrdText  = $content['bar_order_text']       ?? 'Objednávku můžete realizovat s naším obchodním oddělením.';
-    $barOrdEmail = $content['bar_order_email']      ?? 'obchod.project@mt3.cz';
-    $barOrdLabel = $content['bar_order_label']      ?? 'Objednat';
-@endphp
 
 {{-- ── Hero video sekce ────────────────────────────────────────── --}}
-<section class="hp-video position-relative {{ $heroClass }}">
+<section class="hp-video position-relative {{ ($page->content['hero_type'] ?? 'classic') === 'alternative' ? 'video-hero-alt' : 'video-hero-poster' }}">
 
     <div class="video-overlay">
 
         {{-- 1. text – nahoře uprostřed --}}
-        @if(!empty($content['hero_heading']))
+        @if(!empty($page->content['hero_heading']))
         <div class="video-heading">
-            @if(!empty($content['hero_eyebrow']))
-                <p class="text-center text-dark-grey fs-5 fw-light">{{ $content['hero_eyebrow'] }}</p>
+            @if(!empty($page->content['hero_eyebrow']))
+                <p class="text-center text-dark-grey fs-5 fw-light">{{ $page->content['hero_eyebrow'] }}</p>
             @endif
-            <h2 class="text-center text-dark-grey fw-bold display-6">{{ $content['hero_heading'] }}</h2>
-            @if(!empty($content['hero_text']))
-                <p class="text-center text-dark-grey fs-5">{{ $content['hero_text'] }}</p>
+            <h2 class="text-center text-dark-grey fw-bold display-6">{{ $page->content['hero_heading'] }}</h2>
+            @if(!empty($page->content['hero_text']))
+                <p class="text-center text-dark-grey fs-5">{{ $page->content['hero_text'] }}</p>
             @endif
-            @if(!empty($content['hero_price']))
-                <p class="text-center fs-5 text-dark-grey fw-light">{{ $content['hero_price'] }}</p>
+            @if(!empty($page->content['hero_price']))
+                <p class="text-center fs-5 text-dark-grey fw-light">{{ $page->content['hero_price'] }}</p>
             @endif
         </div>
         @endif
 
         {{-- 2. text – popis (pozice závisí na typu) --}}
-        @if(!empty($content['hero_heading']))
-        <div class="{{ $descClass }}">
-            @if(!empty($content['hero_eyebrow']))
-                <p class="text-dark-grey fs-4 me-1">{{ $content['hero_eyebrow'] }}</p>
+        @if(!empty($page->content['hero_heading']))
+        <div class="{{ ($page->content['hero_type'] ?? 'classic') === 'alternative' ? 'video-description' : 'video-description-right' }}">
+            @if(!empty($page->content['hero_eyebrow']))
+                <p class="text-dark-grey fs-4 me-1">{{ $page->content['hero_eyebrow'] }}</p>
             @endif
-            <h3 class="text-dark-grey fw-500 display-5">{{ $content['hero_heading'] }}</h3>
-            @if(!empty($content['hero_text']))
-                <p class="text-dark-grey fs-4 mb-4">{{ $content['hero_text'] }}</p>
+            <h3 class="text-dark-grey fw-500 display-5">{{ $page->content['hero_heading'] }}</h3>
+            @if(!empty($page->content['hero_text']))
+                <p class="text-dark-grey fs-4 mb-4">{{ $page->content['hero_text'] }}</p>
             @endif
-            @if(!empty($content['hero_price']))
-                <p class="text-dark-grey fs-4 fw-light">{{ $content['hero_price'] }}</p>
+            @if(!empty($page->content['hero_price']))
+                <p class="text-dark-grey fs-4 fw-light">{{ $page->content['hero_price'] }}</p>
             @endif
         </div>
         @endif
@@ -63,7 +47,11 @@
             <img src="{{ asset('assets/icons/sipka-video.svg') }}" alt="">
         </a>
 
-        @if($heroType === 'classic')
+        @php $inquiryUrl = !empty($page->content['hero_inquiry_page_route_url_id'])
+            ? formatPageLink(['pageRouteUrl' => $page->content['hero_inquiry_page_route_url_id']])
+            : ($page->content['hero_inquiry_url'] ?? '/napiste-nam'); @endphp
+
+        @if(($page->content['hero_type'] ?? 'classic') === 'classic')
             {{-- Klasický: play vlevo, napište nám vpravo --}}
             <div class="video-icon-left-group">
                 <a href="#" onclick="restartAnimace(); return false;">
@@ -95,17 +83,22 @@
 
     </div>
 
-    @if($videoUrl)
+    @if(!empty($page->content['hero_video_file']))
+    @php $videoUrl = \App\Services\Content\MediaService::getMediaUrl($page->content['hero_video_file']); @endphp
     <video class="position-absolute top-0 start-0 w-100 h-100 video-bg hero-section"
-        autoplay muted playsinline preload="auto"
-        @if($posterUrl) poster="{{ $posterUrl }}" @endif>
+        autoplay muted playsinline preload="auto">
         <source src="{{ $videoUrl }}" type="video/mp4">
     </video>
     @endif
 </section>
 
 {{-- ── Showcase sekce + lišty ─────────────────────────────────── --}}
-@foreach($content['sections'] ?? [] as $index => $section)
+@php
+    $barRefUrl = !empty($page->content['bar_reference_page_route_url_id'])
+        ? formatPageLink(['pageRouteUrl' => $page->content['bar_reference_page_route_url_id']])
+        : ($page->content['bar_reference_url'] ?? '/reference');
+@endphp
+@foreach($page->content['sections'] ?? [] as $index => $section)
     @php
         $isReversed = empty($section['is_reversed']);
         $imgId      = $section['image'] ?? null;
@@ -176,18 +169,18 @@
             <p class="mb-0 text-dark-grey py-3 fs-4 container-custom scroll-in">
                 Reference
                 <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
-                <a href="{{ $barRefUrl }}" class="reference-odkaz">{{ $barRefText }}</a>
+                <a href="{{ $barRefUrl }}" class="reference-odkaz">{{ $page->content['bar_reference_text'] ?? 'Podívejte se na realizace.' }}</a>
             </p>
         </div>
         <div class="col-12 col-md-6 objednat-odkaz-background">
             <div class="d-flex flex-column flex-md-row align-items-center pe-md-4 pe-0 gap-2 gap-md-0">
                 <div class="flex-grow-1 d-flex justify-content-center order-0 order-md-0">
-                    <span class="text-dark-grey fs-4 fw-300 py-3 text-md-start scroll-in">{{ $barOrdText }}</span>
+                    <span class="text-dark-grey fs-4 fw-300 py-3 text-md-start scroll-in">{{ $page->content['bar_order_text'] ?? 'Objednávku můžete realizovat s naším obchodním oddělením.' }}</span>
                 </div>
-                @if(!empty($barOrdEmail))
-                <a href="mailto:{{ $barOrdEmail }}"
+                @if(!empty($page->content['bar_order_email']))
+                <a href="mailto:{{ $page->content['bar_order_email'] }}"
                     class="text-dark-grey text-decoration-none fw-500 fs-4 py-2 py-md-3 pe-0 pe-md-4 me-0 scroll-in me-md-4 order-0 order-md-1">
-                    {{ $barOrdLabel }}
+                    {{ $page->content['bar_order_label'] ?? 'Objednat' }}
                     <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
                 </a>
                 @endif
@@ -197,7 +190,7 @@
 @endforeach
 
 {{-- ── Tabulka rozměrů / parametrů ────────────────────────────── --}}
-@if(!empty($content['table_title']) || !empty($content['table_rows']))
+@if(!empty($page->content['table_title']) || !empty($page->content['table_rows']))
 <section class="d-flex align-items-center poster-background">
     <div class="container-fluid container-custom">
         <div class="row">
@@ -213,17 +206,17 @@
                                 {{-- Řádek s obrázky a nadpisem --}}
                                 <tr>
                                     <td class="bg-transparent align-bottom">
-                                        @if(!empty($content['table_title']))
-                                            <h2 class="fsz-7rem mb-4 fw-300 text-start text-dark-grey scroll-in">{{ $content['table_title'] }}</h2>
+                                        @if(!empty($page->content['table_title']))
+                                            <h2 class="fsz-7rem mb-4 fw-300 text-start text-dark-grey scroll-in">{{ $page->content['table_title'] }}</h2>
                                         @endif
-                                        @if(!empty($content['table_subtitle']))
-                                            <h3 class="fs-4 text-dark-grey scroll-in mb-4">{{ $content['table_subtitle'] }}</h3>
+                                        @if(!empty($page->content['table_subtitle']))
+                                            <h3 class="fs-4 text-dark-grey scroll-in mb-4">{{ $page->content['table_subtitle'] }}</h3>
                                         @endif
                                     </td>
                                     @php
-                                        $tCol1ImgId = $content['table_col1_image'] ?? null;
+                                        $tCol1ImgId = $page->content['table_col1_image'] ?? null;
                                         $tCol1ImgId = is_array($tCol1ImgId) ? ($tCol1ImgId['id'] ?? $tCol1ImgId['value'] ?? null) : $tCol1ImgId;
-                                        $tCol2ImgId = $content['table_col2_image'] ?? null;
+                                        $tCol2ImgId = $page->content['table_col2_image'] ?? null;
                                         $tCol2ImgId = is_array($tCol2ImgId) ? ($tCol2ImgId['id'] ?? $tCol2ImgId['value'] ?? null) : $tCol2ImgId;
                                     @endphp
                                     @if($tCol1ImgId)
@@ -242,38 +235,39 @@
                                     @endif
                                 </tr>
                                 {{-- Záhlaví sloupců --}}
-                                @if(!empty($content['table_col1_label']) || !empty($content['table_col2_label']))
+                                @if(!empty($page->content['table_col1_label']) || !empty($page->content['table_col2_label']))
                                 <tr class="brd-bottom-dark-grey">
-                                    <td class="text-dark-grey fs-5 bg-transparent fw-400">Parametr</td>
-                                    @if(!empty($content['table_col1_label']))
+                                    <td class="text-dark-grey fs-5 bg-transparent fw-400">{{ $page->content['table_param_label'] ?? 'Parametr' }}</td>
+                                    @if(!empty($page->content['table_col1_label']))
                                         <td class="bg-transparent">
-                                            <p class="text-dark-grey fs-5 fw-400 mb-0">{{ $content['table_col1_label'] }}</p>
+                                            <p class="text-dark-grey fs-5 fw-400 mb-0">{{ $page->content['table_col1_label'] }}</p>
                                         </td>
                                     @endif
-                                    @if(!empty($content['table_col2_label']))
+                                    @if(!empty($page->content['table_col2_label']))
                                         <td class="bg-transparent">
-                                            <p class="text-dark-grey fs-5 fw-400 mb-0">{{ $content['table_col2_label'] }}</p>
+                                            <p class="text-dark-grey fs-5 fw-400 mb-0">{{ $page->content['table_col2_label'] }}</p>
                                         </td>
                                     @endif
                                 </tr>
                                 @endif
                                 {{-- Datové řádky --}}
-                                @foreach($content['table_rows'] ?? [] as $row)
+                                @foreach($page->content['table_rows'] ?? [] as $row)
                                     @continue(empty($row['param']) && empty($row['col1_value']) && empty($row['col2_value']))
                                     <tr>
                                         <td class="text-dark-grey fs-5 fw-300 bg-transparent py-0">{{ $row['param'] ?? '' }}</td>
                                         <td class="text-dark-grey fs-5 fw-300 bg-transparent py-0">{{ $row['col1_value'] ?? '' }}</td>
-                                        @if(!empty($content['table_col2_label']) || !empty($row['col2_value']))
+                                        @if(!empty($page->content['table_col2_label']) || !empty($row['col2_value']))
                                             <td class="text-dark-grey fs-5 fw-300 bg-transparent py-0">{{ $row['col2_value'] ?? '' }}</td>
                                         @endif
+
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @if(!empty($content['table_note']))
-                    <p class="text-dark-grey fw-light fs-6 mt-4 text-start scroll-in">{{ $content['table_note'] }}</p>
+                @if(!empty($page->content['table_note']))
+                    <p class="text-dark-grey fw-light fs-6 mt-4 text-start scroll-in">{{ $page->content['table_note'] }}</p>
                 @endif
             </div>
         </div>
@@ -287,18 +281,18 @@
         <p class="mb-0 text-dark-grey py-3 fs-4 container-custom scroll-in">
             Reference
             <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
-            <a href="{{ $barRefUrl }}" class="reference-odkaz">{{ $barRefText }}</a>
+            <a href="{{ $barRefUrl }}" class="reference-odkaz">{{ $page->content['bar_reference_text'] ?? 'Podívejte se na realizace.' }}</a>
         </p>
     </div>
     <div class="col-12 col-md-6 objednat-odkaz-background">
         <div class="d-flex flex-column flex-md-row align-items-center pe-md-4 pe-0 gap-2 gap-md-0">
             <div class="flex-grow-1 d-flex justify-content-center order-0 order-md-0">
-                <span class="text-dark-grey fs-4 fw-300 py-3 text-md-start scroll-in">{{ $barOrdText }}</span>
+                <span class="text-dark-grey fs-4 fw-300 py-3 text-md-start scroll-in">{{ $page->content['bar_order_text'] ?? 'Objednávku můžete realizovat s naším obchodním oddělením.' }}</span>
             </div>
-            @if(!empty($barOrdEmail))
-            <a href="mailto:{{ $barOrdEmail }}"
+            @if(!empty($page->content['bar_order_email']))
+            <a href="mailto:{{ $page->content['bar_order_email'] }}"
                 class="text-dark-grey text-decoration-none fw-500 fs-4 py-2 py-md-3 pe-0 pe-md-4 me-0 scroll-in me-md-4 order-0 order-md-1">
-                {{ $barOrdLabel }}
+                {{ $page->content['bar_order_label'] ?? 'Objednat' }}
                 <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
             </a>
             @endif
@@ -314,5 +308,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('assets/js/' . ($heroType === 'alternative' ? 'product-video-alternative.js' : 'product-video.js')) }}"></script>
+    <script src="{{ asset('assets/js/' . (($page->content['hero_type'] ?? 'classic') === 'alternative' ? 'product-video-alternative.js' : 'product-video.js')) }}"></script>
 @endpush
