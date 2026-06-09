@@ -2217,6 +2217,46 @@ a.product-title:hover {
     line-height: 1.4;
 }
 
+.text-page-text p,
+.rich-editor-highlight p {
+    min-height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.text-page-text ul,
+.rich-editor-highlight ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.text-page-text ul li,
+.rich-editor-highlight ul li {
+    display: flex;
+    gap: 0.4em;
+    margin-bottom: 0.3em;
+}
+
+.text-page-text ul li::before,
+.rich-editor-highlight ul li::before {
+    content: '-';
+    flex-shrink: 0;
+}
+
+.text-page-text ul li p,
+.rich-editor-highlight ul li p {
+    margin: 0;
+}
+
+.text-page-text strong,
+.text-page-text b,
+.rich-editor-highlight strong,
+.rich-editor-highlight b {
+    font-weight: 700;
+    font-style: normal;
+    color: inherit;
+    background: none;
+}
+
 /* ===== PĹIHLĂĹ ENĂŤ ===== */
 .ap-divider {
     border: none;
