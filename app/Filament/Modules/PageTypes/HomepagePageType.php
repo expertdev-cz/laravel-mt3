@@ -28,7 +28,7 @@ class HomepagePageType
                         ->label('Showcase sekce')
                         ->schema([
                             Checkbox::make('is_reversed')
-                                ->label('Obrázek vlevo'),
+                                ->label('Obrázek vpravo'),
                             ImageModule::getDefinition('background_image', 'Background obrázek sekce', ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']),
                             TextInput::make('eyebrow_title')
                                 ->label('Hlavní claim'),
