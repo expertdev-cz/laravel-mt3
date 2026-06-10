@@ -130,8 +130,14 @@ class AdminPanelProvider extends PanelProvider
     {
         if (!Schema::hasTable('languages')) {
             return [
-                'header-cs' => 'Header (CS)',
-                'header-en' => 'Header (EN)',
+                'header-cs'    => 'Header (CS)',
+                'header-en'    => 'Header (EN)',
+                'footer-1-cs'  => 'Patička – sloupec 1 (CS)',
+                'footer-2-cs'  => 'Patička – sloupec 2 (CS)',
+                'footer-3-cs'  => 'Patička – sloupec 3 (CS)',
+                'footer-1-en'  => 'Patička – sloupec 1 (EN)',
+                'footer-2-en'  => 'Patička – sloupec 2 (EN)',
+                'footer-3-en'  => 'Patička – sloupec 3 (EN)',
             ];
         }
 
@@ -148,8 +154,14 @@ class AdminPanelProvider extends PanelProvider
         $locations = [];
 
         foreach ($locales as $locale) {
-            $key = 'header-' . $locale;
-            $locations[$key] = 'Header (' . strtoupper($locale) . ')';
+            $locations['header-' . $locale] = 'Header (' . strtoupper($locale) . ')';
+        }
+
+        foreach ($locales as $locale) {
+            $upper = strtoupper($locale);
+            $locations['footer-1-' . $locale] = 'Patička – sloupec 1 (' . $upper . ')';
+            $locations['footer-2-' . $locale] = 'Patička – sloupec 2 (' . $upper . ')';
+            $locations['footer-3-' . $locale] = 'Patička – sloupec 3 (' . $upper . ')';
         }
 
         return $locations;
