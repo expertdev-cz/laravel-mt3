@@ -20,7 +20,6 @@ class PageTypesHelper
         'authorized-access-register' => PagesController::class,
         'inquiry' => PagesController::class,
         'authorized-access-home' => PagesController::class,
-        'authorized-access-technical-sheets' => PagesController::class,
         'product' => PagesController::class,
         'next' => PagesController::class,
     ];
@@ -37,7 +36,6 @@ class PageTypesHelper
         'authorized-access-register' => 'AP - Registrace',
         'inquiry' => 'Napište nám',
         'authorized-access-home' => 'AP - Rozcestník',
-        'authorized-access-technical-sheets' => 'AP - Technické listy',
         'product' => 'Produktová stránka',
         'next' => 'Next',
     ];

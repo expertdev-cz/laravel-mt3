@@ -12,9 +12,6 @@
         @if(data_get($page->content, 'subtitle'))
             <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ data_get($page->content, 'subtitle') }}</p>
         @endif
-        @if(data_get($page->content, 'intro'))
-            <div class="fw-light text-dark-grey mt-3 scroll-in">{!! data_get($page->content, 'intro') !!}</div>
-        @endif
     </div>
 </section>
 

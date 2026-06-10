@@ -1,18 +1,16 @@
-<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+<div>
     @if(!$isAuthenticated)
-        <p class="text-sm text-slate-600">Obsah autorizovaného přístupu je dostupný až po <a href="{{ $loginUrl }}">přihlášení</a>.</p>
+        <p class="fw-light text-dark-grey text-page-text">Obsah autorizovaného přístupu je dostupný až po <a href="{{ $loginUrl }}">přihlášení</a>.</p>
     @elseif($folders->isEmpty())
-        <p class="text-sm text-slate-600">Zatím nejsou k dispozici žádné složky.</p>
+        <p class="fw-light text-dark-grey text-page-text">Zatím nejsou k dispozici žádné složky.</p>
     @else
-        <div class="grid gap-5 md:grid-cols-3">
+        <div class="ap-ikony-grid">
             @foreach($folders as $folder)
-                <article class="rounded-2xl border border-slate-200 p-5">
-                    <h2 class="text-xl font-semibold text-slate-900">{{ $folder->title }}</h2>
-                    @if($folder->description)
-                        <p class="mt-3 text-sm leading-6 text-slate-600">{{ $folder->description }}</p>
-                    @endif
-                </article>
+                <a href="{{ route('ap.folder', $folder->slug) }}" class="ap-ikona-item">
+                    <img src="{{ asset('assets/icons/obj_47.svg') }}" alt="{{ $folder->title }}" class="ap-ikona-img">
+                    <span class="ap-ikona-label">{{ $folder->title }}</span>
+                </a>
             @endforeach
         </div>
     @endif
-</section>
+</div>

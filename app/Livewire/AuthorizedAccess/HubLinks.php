@@ -20,15 +20,17 @@ class HubLinks extends Component
             ->where('active', 1)
             ->value('slug');
 
+        $folders = AuthorizedAccessFolder::query()
+            ->where('page_type', 'authorized-access-technical-sheets')
+            ->where('is_active', true)
+            ->orderBy('sort')
+            ->orderBy('title')
+            ->get();
+
         return view('livewire.authorized-access.hub-links', [
             'isAuthenticated' => Auth::guard('authorized_access')->check(),
             'loginUrl' => '/' . ($loginSlug ?? 'autorizovany-pristup/prihlaseni'),
-            'folders' => AuthorizedAccessFolder::query()
-                ->where('page_type', 'authorized-access-home')
-                ->where('is_active', true)
-                ->orderBy('sort')
-                ->orderBy('title')
-                ->get(),
+            'folders' => $folders,
         ]);
     }
 }

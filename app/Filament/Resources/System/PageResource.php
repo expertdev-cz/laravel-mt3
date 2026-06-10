@@ -7,7 +7,6 @@ use App\Filament\Modules\PageTypes\AboutUsPageType;
 use App\Filament\Modules\PageTypes\AuthorizedAccessHomePageType;
 use App\Filament\Modules\PageTypes\AuthorizedAccessLoginPageType;
 use App\Filament\Modules\PageTypes\AuthorizedAccessRegisterPageType;
-use App\Filament\Modules\PageTypes\AuthorizedAccessTechnicalSheetsPageType;
 use App\Filament\Modules\PageTypes\HomepagePageType;
 use App\Filament\Modules\PageTypes\InquiryPageType;
 use App\Filament\Modules\PageTypes\ArticlesPageType;
@@ -71,7 +70,6 @@ class PageResource extends Resource
                                 'authorized-access-register' => AuthorizedAccessRegisterPageType::getDefinition(),
                                 'inquiry' => InquiryPageType::getDefinition(),
                                 'authorized-access-home' => AuthorizedAccessHomePageType::getDefinition(),
-                                'authorized-access-technical-sheets' => AuthorizedAccessTechnicalSheetsPageType::getDefinition(),
                                 'text' => TextPageType::getDefinition(),
                                 'product' => ProductPageType::getDefinition(),
                                 'next' => NextPageType::getDefinition(),

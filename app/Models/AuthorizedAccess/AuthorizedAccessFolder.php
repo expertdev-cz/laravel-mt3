@@ -12,9 +12,10 @@ class AuthorizedAccessFolder extends Model
 
     protected $fillable = [
         'title',
+        'subtitle',
         'slug',
-        'description',
         'page_type',
+        'target_page_type',
         'sort',
         'is_active',
     ];

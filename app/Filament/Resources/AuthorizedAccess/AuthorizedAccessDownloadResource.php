@@ -28,6 +28,7 @@ class AuthorizedAccessDownloadResource extends Resource
     protected static ?int $navigationSort = 30;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-arrow-down';
     protected static ?string $navigationLabel = 'AP soubory';
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Schema $schema): Schema
     {

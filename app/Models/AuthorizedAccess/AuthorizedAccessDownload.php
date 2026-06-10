@@ -12,9 +12,9 @@ class AuthorizedAccessDownload extends Model
 
     protected $fillable = [
         'folder_id',
+        'category',
         'code',
         'title',
-        'description',
         'file',
         'sort',
         'is_active',

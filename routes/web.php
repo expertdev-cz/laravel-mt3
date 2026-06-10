@@ -3,6 +3,7 @@
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\AuthorizedAccessController;
 use App\Models\AuthorizedAccess\AuthorizedAccessUser;
 use App\Models\System\Page;
 use Illuminate\Http\Request;
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PagesController::class, 'index']);
+
+Route::middleware('web')
+    ->get('/autorizovany-pristup/soubory/{folderSlug}', [AuthorizedAccessController::class, 'folderPage'])
+    ->name('ap.folder');
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 

@@ -1,37 +1,62 @@
-<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+<div>
     @if(!$isAuthenticated)
-        <p class="text-sm text-slate-600">Technické listy jsou dostupné až po přihlášení.</p>
+        <section class="d-flex align-items-center pt-5 pb-5">
+            <div class="container-fluid container-custom">
+                <div class="showcase-spacer"></div>
+                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">Technické listy jsou dostupné až po <a href="{{ $loginUrl }}">přihlášení</a>.</p>
+            </div>
+        </section>
     @elseif($folders->isEmpty())
-        <p class="text-sm text-slate-600">Zatím zde nejsou žádné složky ani soubory ke stažení.</p>
+        <section class="d-flex align-items-center pt-5 pb-5">
+            <div class="container-fluid container-custom">
+                <div class="showcase-spacer"></div>
+                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">Zatím zde nejsou žádné složky ani soubory ke stažení.</p>
+            </div>
+        </section>
     @else
-        <div class="space-y-8">
-            @foreach($folders as $folder)
-                <section>
-                    <h2 class="text-2xl font-semibold text-slate-900">{{ $folder->title }}</h2>
-                    @if($folder->description)
-                        <p class="mt-2 text-sm leading-6 text-slate-600">{{ $folder->description }}</p>
+        @foreach($folders as $folder)
+            <section class="d-flex align-items-center pt-5 pb-5">
+                <div class="container-fluid container-custom">
+                    <div class="showcase-spacer"></div>
+                    <h1 class="text-dark-grey mb-3 scroll-in text-page-h1">{{ $folder->title }}</h1>
+                    @if($folder->subtitle)
+                        <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ $folder->subtitle }}</p>
                     @endif
+                </div>
+            </section>
 
-                    <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200">
-                        @forelse($folder->downloads as $download)
-                            <div class="grid gap-3 border-b border-slate-200 px-5 py-4 md:grid-cols-[180px,1fr,auto] md:items-center last:border-b-0">
-                                <div class="text-sm font-medium text-slate-500">{{ $download->code }}</div>
-                                <div>
-                                    <p class="font-medium text-slate-900">{{ $download->title }}</p>
-                                    @if($download->description)
-                                        <p class="mt-1 text-sm text-slate-600">{{ $download->description }}</p>
+            <section class="py-4 mg-bottom-5rm">
+                <hr class="ap-divider">
+                <div class="container-fluid container-custom">
+                    <div class="col-10">
+                        @php $lastCategory = null; $downloads = $folder->downloads; @endphp
+                        @foreach($downloads as $i => $download)
+                            @if($download->category !== $lastCategory)
+                                @if($lastCategory !== null)
+                                    <div class="mb-5"></div>
+                                @endif
+                                @if($download->category)
+                                    <div class="fw-light text-dark-grey scroll-in text-page-text mb-2">{!! $download->category !!}</div>
+                                @endif
+                                @php $lastCategory = $download->category; @endphp
+                            @endif
+                            @php $isLastInCategory = !isset($downloads[$i + 1]) || $downloads[$i + 1]->category !== $lastCategory; @endphp
+                            <div class="row align-items-center scroll-in py-3 {{ $isLastInCategory ? 'mb-3' : 'border-bottom-dark-grey' }}">
+                                <div class="col-2"><span class="fw-bold text-dark-grey text-page-text">{{ $download->code }}</span></div>
+                                <div class="col-7"><span class="fw-light text-dark-grey text-page-text">{{ $download->title }}</span></div>
+                                <div class="col-3">
+                                    @if($download->file)
+                                        <a href="{{ asset('storage/' . $download->file) }}" class="d-flex align-items-center gap-2 text-dark-grey text-decoration-none" target="_blank" rel="noopener">
+                                            <img src="{{ asset('assets/icons/obj_001.svg') }}" alt="" style="height: 2.4rem; vertical-align: middle;">
+                                            <span class="fw-600 text-page-text">stáhnout</span>
+                                        </a>
                                     @endif
                                 </div>
-                                @if($download->file)
-                                    <a href="{{ asset('storage/' . $download->file) }}" class="inline-flex rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700" target="_blank" rel="noopener">Stáhnout</a>
-                                @endif
                             </div>
-                        @empty
-                            <div class="px-5 py-4 text-sm text-slate-600">V této složce zatím nejsou žádné soubory.</div>
-                        @endforelse
+                        @endforeach
                     </div>
-                </section>
-            @endforeach
-        </div>
+                </div>
+            </section>
+        @endforeach
     @endif
-</section>
+</div>
