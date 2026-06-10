@@ -25,7 +25,7 @@
                         } else {
                             $route = $item->url ?: '#';
                         }
-                        $hasChildren = $item->menuItems && $item->menuItems->count() > 0;
+                        $hasChildren = $item->children && $item->children->count() > 0;
                         $isSubmenuTrigger = $hasChildren || str_contains($item->classes ?? '', 'has-submenu');
                     @endphp
                     @if($isSubmenuTrigger)
@@ -53,8 +53,8 @@
 
 {{-- Mega submenu for items with children --}}
 @foreach(($menuItems ?? collect()) as $item)
-    @if(($item->menuItems && $item->menuItems->count() > 0) || str_contains($item->classes ?? '', 'has-submenu'))
-        <x-header.header-submenu />
+    @if(($item->children && $item->children->count() > 0) || str_contains($item->classes ?? '', 'has-submenu'))
+        <x-header.header-submenu :children="$item->children" />
         @break
     @endif
 @endforeach

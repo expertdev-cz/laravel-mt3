@@ -1,14 +1,27 @@
-{{-- Mega submenu (zatím statické HTML, napojení na admin later) --}}
+@props(['children' => collect()])
+@php
+    use Illuminate\Support\Collection;
+
+    $children = $children instanceof Collection ? $children : collect($children ?? []);
+
+    // Helper: URL z menu itemu (model MenuItem má computed url atribut)
+    $getItemUrl = fn($item) => $item->url ?: '#';
+@endphp
+{{-- Mega submenu --}}
 <div id="submenu-level2" class="dropdown-menu-custom">
     <div class="dropdown-menu-bg">
         <div class="container-fw mx-0">
             <div class="submenu-content">
                 <!-- View 1: Základní rozdělení -->
+                @php
+                    $urls = $children->map(fn($item) => $getItemUrl($item))->values();
+                    $lastChildren = $children->last()?->children ?? collect();
+                @endphp
                 <div id="view-v1" class="submenu-view">
                     <div class="category-header d-flex text-dark-grey justify-content-center">Základní rozdělení</div>
                     <div class="grid-5 ms-70">
                         <div>
-                            <a href="/poster" class="text-decoration-none no-underline">
+                            <a href="{{ $urls[0] ?? '#' }}" class="text-decoration-none no-underline">
                                 <div class="product-category">
                                     <div class="product-title text-dark-grey">Poster</div>
                                     <div class="product-subtitle text-dark-grey">plakátové</div>
@@ -22,7 +35,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="#" class="text-decoration-none no-underline">
+                            <a href="{{ $urls[1] ?? '#' }}" class="text-decoration-none no-underline">
                                 <div class="product-category">
                                     <div class="product-title text-dark-grey">Scroll</div>
                                     <div class="product-subtitle text-dark-grey">rolovací</div>
@@ -36,7 +49,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="#" class="text-decoration-none no-underline">
+                            <a href="{{ $urls[2] ?? '#' }}" class="text-decoration-none no-underline">
                                 <div class="product-category">
                                     <div class="product-title text-dark-grey">Smart</div>
                                     <div class="product-subtitle text-dark-grey">monitor</div>
@@ -50,7 +63,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="#" class="text-decoration-none no-underline">
+                            <a href="{{ $urls[3] ?? '#' }}" class="text-decoration-none no-underline">
                                 <div class="product-category">
                                     <div class="product-title text-dark-grey">IF - Infovitríny</div>
                                     <div class="product-subtitle text-dark-grey">plakáty - dokumenty</div>
@@ -64,20 +77,20 @@
                             </a>
                         </div>
                         <div>
-                            <a href="/next" class="text-decoration-none no-underline">
+                            <a href="{{ $urls[4] ?? '#' }}" class="text-decoration-none no-underline">
                                 <div class="p-3 text-start">
                                     <div class="product-title text-dark-grey">Next</div>
                                     <div class="product-subtitle mb-4 text-dark-grey">ostatní produkty</div>
                                     <div class="next-category">
-                                        <a href="#" class="next-item text-dark-grey">- citylighty na sloupy</a>
-                                        <a href="#" class="next-item text-dark-grey">- zastávkové označníky</a>
-                                        <a href="#" class="next-item text-dark-grey">- orientační systémy</a>
-                                        <a href="#" class="next-item text-dark-grey">- zastřešení</a>
-                                        <a href="#" class="next-item text-dark-grey">- zakázková výroba</a>
+                                        @foreach($lastChildren as $sub)
+                                            <a href="{{ $getItemUrl($sub) }}" class="next-item text-dark-grey">- {{ $sub->title }}</a>
+                                        @endforeach
                                     </div>
                                 </div>
                             </a>
                         </div>
+                    </div>
+                </div>
                     </div>
                 </div>
 
