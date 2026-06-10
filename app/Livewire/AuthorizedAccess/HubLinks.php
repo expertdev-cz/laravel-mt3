@@ -20,6 +20,12 @@ class HubLinks extends Component
             ->where('active', 1)
             ->value('slug');
 
+        $directorySlug = Page::query()
+            ->where('type', 'authorized-access-home')
+            ->where('lang_locale', $locale)
+            ->where('active', 1)
+            ->value('slug');
+
         $folders = AuthorizedAccessFolder::query()
             ->where('page_type', 'authorized-access-technical-sheets')
             ->where('is_active', true)
@@ -30,6 +36,7 @@ class HubLinks extends Component
         return view('livewire.authorized-access.hub-links', [
             'isAuthenticated' => Auth::guard('authorized_access')->check(),
             'loginUrl' => '/' . ($loginSlug ?? 'autorizovany-pristup/prihlaseni'),
+            'directorySlug' => $directorySlug ?? 'autorizovany-pristup',
             'folders' => $folders,
         ]);
     }

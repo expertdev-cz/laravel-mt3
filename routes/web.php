@@ -24,10 +24,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PagesController::class, 'index']);
 
-Route::middleware('web')
-    ->get('/autorizovany-pristup/soubory/{folderSlug}', [AuthorizedAccessController::class, 'folderPage'])
-    ->name('ap.folder');
-
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 
 Route::get('/autorizovany-pristup/email/verify/{id}/{hash}', function (Request $request, int $id, string $hash) {
