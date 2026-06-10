@@ -38,7 +38,7 @@ class RegistrationForm extends Component
 
         $throttleKey = 'authorized-access-register:' . request()->ip();
         if (RateLimiter::tooManyAttempts($throttleKey, 10)) {
-            $this->addError('email', 'Příliš mnoho pokusů. Zkuste to prosím za chvíli.');
+            $this->addError('email', __('Příliš mnoho pokusů. Zkuste to prosím za chvíli.'));
             return;
         }
         RateLimiter::hit($throttleKey, 60);

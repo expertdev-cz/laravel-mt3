@@ -3,14 +3,14 @@
         <section class="d-flex align-items-center pt-5 pb-5">
             <div class="container-fluid container-custom">
                 <div class="showcase-spacer"></div>
-                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">Technické listy jsou dostupné až po <a href="{{ $loginUrl }}">přihlášení</a>.</p>
+                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ __('Technické listy jsou dostupné až po') }} <a href="{{ $loginUrl }}">{{ __('přihlášení') }}</a>.</p>
             </div>
         </section>
     @elseif($folders->isEmpty())
         <section class="d-flex align-items-center pt-5 pb-5">
             <div class="container-fluid container-custom">
                 <div class="showcase-spacer"></div>
-                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">Zatím zde nejsou žádné složky ani soubory ke stažení.</p>
+                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ __('Zatím zde nejsou žádné složky ani soubory ke stažení.') }}</p>
             </div>
         </section>
     @else
@@ -48,7 +48,7 @@
                                     @if($download->file)
                                         <a href="{{ asset('storage/' . $download->file) }}" class="d-flex align-items-center gap-2 text-dark-grey text-decoration-none" target="_blank" rel="noopener">
                                             <img src="{{ asset('assets/icons/obj_001.svg') }}" alt="" style="height: 2.4rem; vertical-align: middle;">
-                                            <span class="fw-600 text-page-text">stáhnout</span>
+                                            <span class="fw-600 text-page-text">{{ __('stáhnout') }}</span>
                                         </a>
                                     @endif
                                 </div>

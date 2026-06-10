@@ -43,7 +43,7 @@ class ContactForm extends Component
 
         $key = 'contact:' . request()->ip();
         if (RateLimiter::tooManyAttempts($key, 30)) {
-            $this->addError('general', 'Příliš mnoho požadavků, zkuste to prosím za chvíli.');
+            $this->addError('general', __('Příliš mnoho požadavků, zkuste to prosím za chvíli.'));
             return;
         }
         RateLimiter::hit($key, 60);
@@ -52,14 +52,14 @@ class ContactForm extends Component
 
         $linksCount = preg_match_all('~https?://~i', $validated['content']);
         if ($linksCount > 2) {
-            $this->addError('content', 'Zpráva obsahuje příliš mnoho odkazů.');
+            $this->addError('content', __('Zpráva obsahuje příliš mnoho odkazů.'));
             return;
         }
 
         $setting = Settings::find(1);
         $to = $setting->content['mailContactForm'] ?? null;
         if (empty($to)) {
-            $this->addError('general', 'Odeslání se nepodařilo. Kontaktujte prosím podporu.');
+            $this->addError('general', __('Odeslání se nepodařilo. Kontaktujte prosím podporu.'));
             return;
         }
 
@@ -72,7 +72,7 @@ class ContactForm extends Component
                 ));
         } catch (Throwable $e) {
             report($e);
-            $this->addError('general', 'Odeslání se nepodařilo. Zkuste to prosím za chvíli.');
+            $this->addError('general', __('Odeslání se nepodařilo. Zkuste to prosím za chvíli.'));
             return;
         }
 

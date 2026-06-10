@@ -32,13 +32,20 @@ class InquiryForm extends Component
         ];
     }
 
+    protected function messages(): array
+    {
+        return [
+            'phone.regex' => __('Zadejte telefon ve formátu +420 000 000 000.'),
+        ];
+    }
+
     public function submit(): void
     {
         $this->sent = false;
 
         $key = 'inquiry:' . request()->ip();
         if (RateLimiter::tooManyAttempts($key, 20)) {
-            $this->addError('content', 'Příliš mnoho požadavků, zkuste to prosím za chvíli.');
+            $this->addError('content', __('Příliš mnoho požadavků, zkuste to prosím za chvíli.'));
             return;
         }
         RateLimiter::hit($key, 60);
@@ -64,7 +71,7 @@ class InquiryForm extends Component
                 ));
             } catch (Throwable $e) {
                 report($e);
-                $this->addError('content', 'Odeslání se nepodařilo. Zkuste to prosím za chvíli.');
+                $this->addError('content', __('Odeslání se nepodařilo. Zkuste to prosím za chvíli.'));
                 return;
             }
         }

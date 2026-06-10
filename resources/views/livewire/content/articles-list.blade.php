@@ -78,7 +78,7 @@
                                     @endif
                                     <div>
                                         <a href="/{{ $mainSlug }}/{{ $item->slug }}" class="mt-auto text-xs font-bold uppercase tracking-wide text-slate-900 hover:text-primary">
-                                            Přečtěte si více
+                                            {{ __('Přečtěte si více') }}
                                         </a>
                                     </div>
                                 </div>

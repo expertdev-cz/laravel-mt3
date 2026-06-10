@@ -28,7 +28,7 @@ class LoginForm extends Component
 
         $throttleKey = 'authorized-access-login:' . request()->ip();
         if (RateLimiter::tooManyAttempts($throttleKey, 10)) {
-            $this->addError('login', 'Příliš mnoho pokusů. Zkuste to prosím za chvíli.');
+            $this->addError('login', __('Příliš mnoho pokusů. Zkuste to prosím za chvíli.'));
             return null;
         }
         RateLimiter::hit($throttleKey, 60);
@@ -39,19 +39,19 @@ class LoginForm extends Component
             ->first();
 
         if (!$user) {
-            $this->addError('login', 'Účet nebyl nalezen.');
+            $this->addError('login', __('Účet nebyl nalezen.'));
             return null;
         }
 
         if (!$user->hasVerifiedEmail()) {
-            $this->addError('login', 'Nejdříve potvrďte svůj e-mail.');
+            $this->addError('login', __('Nejdříve potvrďte svůj e-mail.'));
             return null;
         }
 
         $credentialsKey = filter_var($validated['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'login';
 
         if (!Auth::guard('authorized_access')->attempt([$credentialsKey => $validated['login'], 'password' => $validated['password']], $this->remember)) {
-            $this->addError('password', 'Neplatné přihlašovací údaje.');
+            $this->addError('password', __('Neplatné přihlašovací údaje.'));
             return null;
         }
 
