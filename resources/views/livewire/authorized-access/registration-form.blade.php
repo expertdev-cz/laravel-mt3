@@ -1,64 +1,65 @@
-<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-    <form wire:submit.prevent="submit" class="space-y-5" novalidate>
-        <div class="grid gap-5 md:grid-cols-2">
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">Jméno</label>
-                <input wire:model="name" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-                @error('name')<span class="mt-1 block text-sm text-red-600">{{ $message }}</span>@enderror
-            </div>
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">Příjmení</label>
-                <input wire:model="surname" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-                @error('surname')<span class="mt-1 block text-sm text-red-600">{{ $message }}</span>@enderror
-            </div>
-        </div>
+<form wire:submit.prevent="submit" class="ap-registration-form" novalidate autocomplete="off">
 
-        <div class="grid gap-5 md:grid-cols-2">
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">Firma</label>
-                <input wire:model="company" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-                @error('company')<span class="mt-1 block text-sm text-red-600">{{ $message }}</span>@enderror
-            </div>
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">Telefon</label>
-                <input wire:model="phone" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-                @error('phone')<span class="mt-1 block text-sm text-red-600">{{ $message }}</span>@enderror
-            </div>
-        </div>
+    <p class="ap-registration-label" style="margin-bottom: 0.5rem;">Údaje o Vás</p>
 
-        <div class="grid gap-5 md:grid-cols-2">
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
-                <input wire:model="email" type="email" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-                @error('email')<span class="mt-1 block text-sm text-red-600">{{ $message }}</span>@enderror
-            </div>
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">Login</label>
-                <input wire:model="login" type="text" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-                @error('login')<span class="mt-1 block text-sm text-red-600">{{ $message }}</span>@enderror
-            </div>
-        </div>
+    <div class="ap-registration-field" style="flex-direction: row; align-items: center; gap: 1.1rem;">
+        <label class="ap-registration-label" style="min-width: 110px;">Jméno: *</label>
+        <input wire:model="name" type="text" class="ap-registration-input" autocomplete="given-name" />
+        @error('name')<span class="d-block mt-1 text-danger small">{{ $message }}</span>@enderror
+    </div>
 
-        <div class="grid gap-5 md:grid-cols-2">
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">Heslo</label>
-                <input wire:model="password" type="password" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-                @error('password')<span class="mt-1 block text-sm text-red-600">{{ $message }}</span>@enderror
-            </div>
-            <div>
-                <label class="mb-1 block text-sm font-medium text-slate-700">Potvrzení hesla</label>
-                <input wire:model="password_confirmation" type="password" class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-slate-500 focus:outline-none" />
-            </div>
-        </div>
+    <div class="ap-registration-field" style="flex-direction: row; align-items: center; gap: 0.3rem;">
+        <label class="ap-registration-label" style="min-width: 110px;">Příjmení: *</label>
+        <input wire:model="surname" type="text" class="ap-registration-input" autocomplete="family-name" />
+        @error('surname')<span class="d-block mt-1 text-danger small">{{ $message }}</span>@enderror
+    </div>
 
-        <div class="flex items-center gap-3">
-            <button type="submit" class="inline-flex rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60" wire:loading.attr="disabled" wire:target="submit">
-                <span wire:loading.remove wire:target="submit">Vytvořit účet</span>
-                <span wire:loading wire:target="submit">Ukládám...</span>
-            </button>
-            @if($sent)
-                <p class="text-sm font-medium text-emerald-700">Účet byl založen. Zkontrolujte prosím e-mail a potvrďte registraci.</p>
-            @endif
-        </div>
-    </form>
-</section>
+    <div class="ap-registration-field" style="flex-direction: row; align-items: center; gap: 1.5rem;">
+        <label class="ap-registration-label" style="min-width: 110px;">Firma: *</label>
+        <input wire:model="company" type="text" class="ap-registration-input" autocomplete="organization" />
+        @error('company')<span class="d-block mt-1 text-danger small">{{ $message }}</span>@enderror
+    </div>
+
+    <div class="ap-registration-field" style="flex-direction: row; align-items: center; gap: 1.5rem;">
+        <label class="ap-registration-label" style="min-width: 110px;">e-mail: *</label>
+        <input wire:model="email" type="email" class="ap-registration-input" autocomplete="email" />
+        @error('email')<span class="d-block mt-1 text-danger small">{{ $message }}</span>@enderror
+    </div>
+
+    <div class="ap-registration-field" style="flex-direction: row; align-items: center; gap: 1.5rem;">
+        <label class="ap-registration-label" style="min-width: 110px;">tel.: *</label>
+        <input wire:model="phone" type="tel" class="ap-registration-input ap-registration-input-short" placeholder="+420" autocomplete="tel" />
+        @error('phone')<span class="d-block mt-1 text-danger small">{{ $message }}</span>@enderror
+    </div>
+
+    <p class="ap-registration-label" style="margin-bottom: 0.5rem; margin-top: 2rem;">Přihlašovací údaje</p>
+
+    <div class="ap-registration-field">
+        <label class="ap-registration-label">Login:</label>
+        <input wire:model="login" type="text" class="ap-registration-input ap-registration-input-short" placeholder="nejlépe Váš e-mail" autocomplete="username" />
+        @error('login')<span class="d-block mt-1 text-danger small">{{ $message }}</span>@enderror
+    </div>
+
+    <div class="ap-registration-field">
+        <label class="ap-registration-label">Heslo:</label>
+        <input wire:model="password" type="password" class="ap-registration-input ap-registration-input-short" placeholder="nejméně 8 znaků" autocomplete="new-password" />
+        @error('password')<span class="d-block mt-1 text-danger small">{{ $message }}</span>@enderror
+    </div>
+
+    <div class="ap-registration-field">
+        <label class="ap-registration-label">Heslo potvrzení:</label>
+        <input wire:model="password_confirmation" type="password" class="ap-registration-input ap-registration-input-short" placeholder="zopakujte heslo" autocomplete="new-password" />
+    </div>
+
+    <div class="ap-registration-btn-row">
+        <button type="submit" class="form-submit-button mt-3" wire:loading.attr="disabled" wire:target="submit">
+            <span wire:loading.remove wire:target="submit">Vytvořit</span>
+            <span wire:loading wire:target="submit">Ukládám...</span>
+        </button>
+    </div>
+
+    @if($sent)
+        <p class="mt-3 text-page-text text-dark-grey">Účet byl založen. Zkontrolujte prosím e-mail a potvrďte registraci.</p>
+    @endif
+
+</form>

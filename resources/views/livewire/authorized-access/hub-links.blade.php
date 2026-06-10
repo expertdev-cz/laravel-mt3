@@ -1,6 +1,6 @@
 <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
     @if(!$isAuthenticated)
-        <p class="text-sm text-slate-600">Obsah autorizovaného přístupu je dostupný až po přihlášení.</p>
+        <p class="text-sm text-slate-600">Obsah autorizovaného přístupu je dostupný až po <a href="{{ $loginUrl }}">přihlášení</a>.</p>
     @elseif($folders->isEmpty())
         <p class="text-sm text-slate-600">Zatím nejsou k dispozici žádné složky.</p>
     @else

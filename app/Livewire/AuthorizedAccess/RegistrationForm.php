@@ -24,9 +24,9 @@ class RegistrationForm extends Component
         return [
             'name' => 'required|string|min:2|max:120',
             'surname' => 'required|string|min:2|max:120',
-            'company' => 'nullable|string|max:160',
+            'company' => 'required|string|max:160',
             'email' => 'required|email:rfc|max:255|unique:authorized_access_users,email',
-            'phone' => 'nullable|string|max:32',
+            'phone' => 'required|string|max:32',
             'login' => 'required|string|min:4|max:120|unique:authorized_access_users,login',
             'password' => 'required|string|min:8|confirmed',
         ];
@@ -53,6 +53,7 @@ class RegistrationForm extends Component
             'phone' => $validated['phone'],
             'login' => $validated['login'],
             'password' => $validated['password'],
+            'lang_locale' => app()->currentLocale(),
         ]);
 
         event(new Registered($user));

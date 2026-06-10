@@ -23,6 +23,7 @@ class AuthorizedAccessUser extends Authenticatable implements MustVerifyEmailCon
         'phone',
         'login',
         'password',
+        'lang_locale',
     ];
 
     protected $hidden = [

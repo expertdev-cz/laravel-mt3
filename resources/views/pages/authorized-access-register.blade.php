@@ -12,9 +12,6 @@
         @if(data_get($page->content, 'subtitle'))
             <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ data_get($page->content, 'subtitle') }}</p>
         @endif
-        @if(data_get($page->content, 'intro'))
-            <div class="fw-light text-dark-grey mt-3 scroll-in">{!! data_get($page->content, 'intro') !!}</div>
-        @endif
     </div>
 </section>
 
@@ -22,6 +19,16 @@
     <hr class="ap-divider">
     <div class="container-fluid container-custom">
         <livewire:authorized-access.registration-form />
+        @if(data_get($page->content, 'support_title') || data_get($page->content, 'support_text'))
+            <div class="mt-4">
+                @if(data_get($page->content, 'support_title'))
+                    <p class="mt-4 text-page-text text-dark-grey">{{ data_get($page->content, 'support_title') }}</p>
+                @endif
+                @if(data_get($page->content, 'support_text'))
+                    <p class="mt-3 text-page-text text-dark-grey fw-light">{{ data_get($page->content, 'support_text') }}</p>
+                @endif
+            </div>
+        @endif
     </div>
 </section>
 @endsection

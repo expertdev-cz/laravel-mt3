@@ -4,6 +4,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ServicesController;
 use App\Models\AuthorizedAccess\AuthorizedAccessUser;
+use App\Models\System\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
@@ -33,9 +34,14 @@ Route::get('/autorizovany-pristup/email/verify/{id}/{hash}', function (Request $
         $user->markEmailAsVerified();
     }
 
-    Auth::guard('authorized_access')->login($user);
+    $locale = $user->lang_locale ?? app()->getLocale();
+    $loginSlug = Page::query()
+        ->where('type', 'authorized-access-login')
+        ->where('lang_locale', $locale)
+        ->where('active', 1)
+        ->value('slug');
 
-    return redirect('/');
+    return redirect('/' . ($loginSlug ?? 'autorizovany-pristup/prihlaseni'));
 })->middleware('signed')->name('authorized-access.verification.verify');
 
 Route::post('/autorizovany-pristup/logout', function () {

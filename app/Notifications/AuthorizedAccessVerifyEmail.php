@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 
 class AuthorizedAccessVerifyEmail extends VerifyEmail
@@ -22,12 +23,15 @@ class AuthorizedAccessVerifyEmail extends VerifyEmail
 
     public function toMail($notifiable): MailMessage
     {
+        $locale = $notifiable->lang_locale ?? App::getLocale();
+        App::setLocale($locale);
+
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage())
-            ->subject('Potvrzení registrace do autorizovaného přístupu')
-            ->line('Pro dokončení registrace potvrďte svůj e-mail.')
-            ->action('Potvrdit e-mail', $verificationUrl)
-            ->line('Pokud jste registraci neprovedli, nemusíte nic dělat.');
+            ->subject(__('ap_email.subject'))
+            ->line(__('ap_email.line1'))
+            ->action(__('ap_email.action'), $verificationUrl)
+            ->line(__('ap_email.line2'));
     }
 }

@@ -18,11 +18,10 @@ class AuthorizedAccessRegisterPageType
                     Textarea::make($arrayToSaveName . '.subtitle')->label('Podnadpis')->rows(2),
                 ])
                 ->columns(1),
-            Fieldset::make('Informace k registraci')
+            Fieldset::make('Doplňkový obsah pod formulářem')
                 ->schema([
-                    RichEditor::make($arrayToSaveName . '.intro')->label('Úvodní text'),
-                    TextInput::make($arrayToSaveName . '.support_title')->label('Spodní nadpis'),
-                    Textarea::make($arrayToSaveName . '.support_text')->label('Spodní text')->rows(3),
+                    TextInput::make($arrayToSaveName . '.support_title')->label('Spodní větší text'),
+                    Textarea::make($arrayToSaveName . '.support_text')->label('Spodní menší text')->rows(3),
                 ])
                 ->columns(1),
         ];

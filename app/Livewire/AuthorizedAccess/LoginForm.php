@@ -3,6 +3,7 @@
 namespace App\Livewire\AuthorizedAccess;
 
 use App\Models\AuthorizedAccess\AuthorizedAccessUser;
+use App\Models\System\Page;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
@@ -57,7 +58,14 @@ class LoginForm extends Component
         $user->forceFill(['last_login_at' => now()])->save();
         session()->regenerate();
 
-        return redirect()->intended('/');
+        $locale = app()->currentLocale();
+        $homeSlug = Page::query()
+            ->where('type', 'authorized-access-home')
+            ->where('lang_locale', $locale)
+            ->where('active', 1)
+            ->value('slug');
+
+        return redirect()->intended('/' . ($homeSlug ?? 'autorizovany-pristup'));
     }
 
     public function render()
