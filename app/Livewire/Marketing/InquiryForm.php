@@ -27,7 +27,7 @@ class InquiryForm extends Component
             'surname' => 'required|string|min:2|max:120',
             'company' => 'nullable|string|max:160',
             'email' => 'required|email:rfc|max:255',
-            'phone' => 'nullable|string|max:32',
+            'phone' => ['required', 'string', 'max:32', 'regex:/^\+\d[\d\s\-]{6,}/'],
             'content' => 'required|string|min:12|max:5000',
         ];
     }
