@@ -167,7 +167,7 @@
     <div class="row g-0">
         <div class="col-12 col-md-6 reference-odkaz-background">
             <p class="mb-0 text-dark-grey py-3 fs-4 container-custom scroll-in">
-                Reference
+                {{ __('Reference') }}
                 <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
                 <a href="{{ $barRefUrl }}" class="reference-odkaz">{{ $page->content['bar_reference_text'] ?? 'Podívejte se na realizace.' }}</a>
             </p>
@@ -180,7 +180,7 @@
                 @if(!empty($page->content['bar_order_email']))
                 <a href="mailto:{{ $page->content['bar_order_email'] }}"
                     class="text-dark-grey text-decoration-none fw-500 fs-4 py-2 py-md-3 pe-0 pe-md-4 me-0 scroll-in me-md-4 order-0 order-md-1">
-                    {{ $page->content['bar_order_label'] ?? 'Objednat' }}
+                    {{ $page->content['bar_order_label'] ?? __('Objednat') }}
                     <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
                 </a>
                 @endif
@@ -237,7 +237,7 @@
                                 {{-- Záhlaví sloupců --}}
                                 @if(!empty($page->content['table_col1_label']) || !empty($page->content['table_col2_label']))
                                 <tr class="brd-bottom-dark-grey">
-                                    <td class="text-dark-grey fs-5 bg-transparent fw-400">{{ $page->content['table_param_label'] ?? 'Parametr' }}</td>
+                                    <td class="text-dark-grey fs-5 bg-transparent fw-400">{{ $page->content['table_param_label'] ?? __('Parametr') }}</td>
                                     @if(!empty($page->content['table_col1_label']))
                                         <td class="bg-transparent">
                                             <p class="text-dark-grey fs-5 fw-400 mb-0">{{ $page->content['table_col1_label'] }}</p>
@@ -279,7 +279,7 @@
 <div class="row g-0">
     <div class="col-12 col-md-6 reference-odkaz-background">
         <p class="mb-0 text-dark-grey py-3 fs-4 container-custom scroll-in">
-            Reference
+                {{ __('Reference') }}
             <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
             <a href="{{ $barRefUrl }}" class="reference-odkaz">{{ $page->content['bar_reference_text'] ?? 'Podívejte se na realizace.' }}</a>
         </p>
@@ -292,7 +292,7 @@
             @if(!empty($page->content['bar_order_email']))
             <a href="mailto:{{ $page->content['bar_order_email'] }}"
                 class="text-dark-grey text-decoration-none fw-500 fs-4 py-2 py-md-3 pe-0 pe-md-4 me-0 scroll-in me-md-4 order-0 order-md-1">
-                {{ $page->content['bar_order_label'] ?? 'Objednat' }}
+                {{ $page->content['bar_order_label'] ?? __('Objednat') }}
                 <img src="{{ asset('assets/icons/sipka-konfig.svg') }}" alt="" height="16px" class="mb1px">
             </a>
             @endif

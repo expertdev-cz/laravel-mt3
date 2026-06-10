@@ -7,7 +7,7 @@
 @section('content')
     @php
         $tags = $article->getTags() ?: [];
-        $articleTitle = $article->title ?: 'Článek';
+        $articleTitle = $article->title ?: __('Článek');
     @endphp
 
     <section class="mx-auto max-w-4xl px-4 pb-12 pt-28 sm:px-6 sm:pt-32 lg:px-8">

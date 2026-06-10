@@ -89,7 +89,7 @@
                     @endif
                     @if(!empty($section['gps_text']))
                         <p class="fw-light text-dark-grey scroll-in text-page-text mb-4 d-flex align-items-center gap-3">
-                            GPS: {{ $section['gps_text'] }}
+                            {{ __('GPS:') }} {{ $section['gps_text'] }}
                             @if(!empty($section['gps_url']))
                                 <a href="{{ $section['gps_url'] }}" target="_blank" rel="noopener" class="d-inline-flex align-items-center text-dark-grey text-decoration-none">
                                     <img src="{{ asset('assets/icons/obj_54.svg') }}" alt="Zobrazit mapu" style="height: 1.4em;">
