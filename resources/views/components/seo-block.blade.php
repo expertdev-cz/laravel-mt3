@@ -63,7 +63,7 @@
     @endif
 
     {{-- Externí vlastní meta/snippety --}}
-    @if(!empty($seo['external']))
+    @if(!empty(trim(strip_tags($seo['external'] ?? ''))))
         {!! $seo['external'] !!}
     @endif
 @endif

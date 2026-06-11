@@ -29,6 +29,7 @@
                 @if($item->locale !== ($actual->locale ?? ''))
                     <li>
                         <a class="dropdown-item fs-5 text-dark-grey p-0" href="#"
+                            data-value="{{ strtoupper($item->locale) }}"
                             wire:click.prevent="changeLang('{{ $item->locale }}', '{{ request()->getRequestUri() }}')">
                             @if(!empty($item->icon))
                                 <img src="/storage/{{ $item->icon }}" alt="{{ strtoupper($item->locale) }}" style="height: 45px;">

@@ -3,7 +3,14 @@
         <section class="d-flex align-items-center pt-5 pb-5">
             <div class="container-fluid container-custom">
                 <div class="showcase-spacer"></div>
-                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ __('Technické listy jsou dostupné až po') }} <a href="{{ $loginUrl }}">{{ __('přihlášení') }}</a>.</p>
+                <h1 class="text-dark-grey mb-3 scroll-in text-page-h1">{{ __('Nejste přihlášeni') }}</h1>
+                <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ __('Soubory ke stažení jsou dostupné pouze přihlášeným uživatelům.') }}</p>
+            </div>
+        </section>
+        <section class="py-4 mg-bottom-5rm">
+            <hr class="ap-divider">
+            <div class="container-fluid container-custom">
+                <p class="fw-light text-dark-grey scroll-in text-page-text">{{ __('Pro zobrazení obsahu se prosím') }} <a href="{{ $loginUrl }}">{{ __('přihlaste') }}</a>. {{ __('Pokud účet nemáte, můžete se') }} <a href="{{ $registerUrl }}">{{ __('zaregistrovat') }}</a>.</p>
             </div>
         </section>
     @elseif($folders->isEmpty())

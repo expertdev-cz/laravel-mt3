@@ -3,6 +3,15 @@
 @section('seo')<x-seo-block :seo="$page->seo" :seo-item="$page"/>@endsection
 
 @section('content')
+@guest('authorized_access')
+<section class="d-flex align-items-center pt-5 pb-5">
+    <div class="container-fluid container-custom">
+        <div class="showcase-spacer"></div>
+        <h1 class="text-dark-grey mb-3 scroll-in text-page-h1">{{ __('Nejste přihlášeni') }}</h1>
+        <p class="fw-light text-dark-grey mb-0 scroll-in text-page-subtitle">{{ __('Obsah autorizovaného přístupu je přístupný pouze přihlášeným uživatelům.') }}</p>
+    </div>
+</section>
+@else
 <section class="d-flex align-items-center pt-5 pb-5">
     <div class="container-fluid container-custom">
         <div class="showcase-spacer"></div>
@@ -14,6 +23,7 @@
         @endif
     </div>
 </section>
+@endguest
 
 <section class="py-4 mg-bottom-5rm">
     <hr class="ap-divider">

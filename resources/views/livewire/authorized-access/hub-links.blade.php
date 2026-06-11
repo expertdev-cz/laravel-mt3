@@ -1,6 +1,6 @@
 <div>
     @if(!$isAuthenticated)
-        <p class="fw-light text-dark-grey text-page-text">{{ __('Obsah autorizovaného přístupu je dostupný až po') }} <a href="{{ $loginUrl }}">{{ __('přihlášení') }}</a>.</p>
+        <p class="fw-light text-dark-grey scroll-in text-page-text">{{ __('Pro zobrazení obsahu se prosím') }} <a href="{{ $loginUrl }}">{{ __('přihlaste') }}</a>. {{ __('Pokud účet nemáte, můžete se') }} <a href="{{ $registerUrl }}">{{ __('zaregistrovat') }}</a>.</p>
     @elseif($folders->isEmpty())
         <p class="fw-light text-dark-grey text-page-text">{{ __('Zatím nejsou k dispozici žádné složky.') }}</p>
     @else

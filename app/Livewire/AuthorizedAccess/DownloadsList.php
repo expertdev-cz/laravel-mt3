@@ -28,6 +28,12 @@ class DownloadsList extends Component
             ->where('active', 1)
             ->value('slug');
 
+        $registerSlug = \App\Models\System\Page::query()
+            ->where('type', 'authorized-access-register')
+            ->where('lang_locale', $locale)
+            ->where('active', 1)
+            ->value('slug');
+
         $query = AuthorizedAccessFolder::query()
             ->with(['downloads' => fn ($query) => $query->where('is_active', true)])
             ->where('is_active', true)
@@ -43,6 +49,7 @@ class DownloadsList extends Component
         return view('livewire.authorized-access.downloads-list', [
             'isAuthenticated' => Auth::guard('authorized_access')->check(),
             'loginUrl' => '/' . ($loginSlug ?? 'autorizovany-pristup/prihlaseni'),
+            'registerUrl' => '/' . ($registerSlug ?? 'autorizovany-pristup/registrace'),
             'folders' => $query->get(),
         ]);
     }

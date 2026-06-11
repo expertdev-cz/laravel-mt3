@@ -191,6 +191,7 @@ return [
         'lastname' => 'příjmení',
         'name' => 'jméno',
         'surname' => 'příjmení',
+        'company' => 'firma',
         'email' => 'e-mail',
         'phone' => 'telefon',
         'prefix' => 'předvolba',

@@ -2310,6 +2310,13 @@ a.product-title:hover {
     justify-content: flex-end;
 }
 
+.ap-field-error {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #dc3545;
+}
+
 
 .ap-registration-input::placeholder {
     color: #C6C6C5;

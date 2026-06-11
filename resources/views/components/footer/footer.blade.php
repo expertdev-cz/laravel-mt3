@@ -32,23 +32,7 @@
             {{-- Autorizovaný přístup --}}
             <div class="mb-4 newsletter">
                 <h6 class="footer-header fs-4">{{ __('Autorizovaný přístup') }}</h6>
-                <div class="d-flex email-form-gap border-bottom">
-                    <input type="email" placeholder="{{ __('Zde zadejte e-mail.') }}" class="footer-email-input" id="footer-ap-email">
-                    <a href="{{ $apLoginUrl }}">
-                        <button type="button" class="footer-submit-btn">{{ __('Přihlásit') }}</button>
-                    </a>
-                </div>
-                <small class="footer-small-text">
-                    {{ __('Přihlášením souhlasíte se') }}
-                    <a href="#" class="footer-link-small">{{ __('zpracováním osobních údajů') }}</a>
-                    {{ __('firmou MT3 project a.s..') }}
-                </small>
-                <div class="d-flex email-form-gap mt-3">
-                    <span class="footer-email-input" style="font-size: 1.2rem;">{{ __('Pokud u nás nemáte vytvořen Autorizovaný přístup') }} &rarr;</span>
-                    <a href="{{ $apRegisterUrl }}">
-                        <button type="button" class="footer-submit-btn2">{{ __('Vytvořit') }}</button>
-                    </a>
-                </div>
+                <livewire:footer.ap-email-check :loginUrl="$apLoginUrl" :registerUrl="$apRegisterUrl" wire:key="footer-ap-email-check" />
             </div>
 
         </div>
@@ -59,7 +43,7 @@
             </div>
             <a href="{{ $inquiryUrl }}">
                 <div class="footer-chat-icon mb-1">
-                    <img src="{{ asset('assets/icons/chat.svg') }}" alt="{{ __('Napište nám') }}" height="48">
+                    <img src="{{ asset('assets/images/icon_bublina.png') }}" alt="{{ __('Napište nám') }}" height="35">
                 </div>
             </a>
         </div>
@@ -74,8 +58,8 @@
                 </div>
                 {{-- Legal links --}}
                 <div class="d-flex gap-2 footer-info">
-                    <div><a href="#" class="footer-link fw-light mx-4 fs-6">{{ __('Podmínky použití') }}</a></div>
-                    <div><a href="#" class="footer-link fw-light mx-4 fs-6">{{ __('Zásady ochrany dat') }}</a></div>
+                    <div><a href="/podminky-pouzivani" class="footer-link fw-light mx-4 fs-6">{{ __('Podmínky použití') }}</a></div>
+                    <div><a href="/zasady-ochrany-osobnich-udaju" class="footer-link fw-light mx-4 fs-6">{{ __('Zásady ochrany dat') }}</a></div>
                     <div><span class="footer-link fw-light ms-4 fs-6">&copy; {{ now()->year }} MT3 project a.s.</span></div>
                 </div>
             </div>

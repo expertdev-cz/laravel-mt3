@@ -122,29 +122,7 @@ window.addEventListener('scroll', function() {
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 }, false);
 
-// Language dropdown
-let currentLang = 'CZ';
-function updateLangDropdown() {
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        const val = item.getAttribute('data-value');
-        item.parentElement.style.display = val === currentLang ? 'none' : '';
-    });
-}
-// Hide current language on initial load
-updateLangDropdown();
-document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-        e.preventDefault();
-        currentLang = this.getAttribute('data-value');
-        const btn = document.getElementById('langDropdown');
-        btn.style.opacity = '0';
-        setTimeout(function() {
-            btn.innerHTML = currentLang + '  <img src="media/icons/select_icon.svg" alt="Select" class="ms-1 mb-1" style="height: 8px;">';
-            updateLangDropdown();
-            btn.style.opacity = '1';
-        }, 180);
-    });
-});
+// Language dropdown – hiding of current language is handled server-side by Blade/Livewire.
 
 // Scroll-in animation observer
 // This should work now without conflicts

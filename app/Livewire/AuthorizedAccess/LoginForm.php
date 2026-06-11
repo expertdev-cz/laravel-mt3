@@ -14,6 +14,11 @@ class LoginForm extends Component
     public string $password = '';
     public bool $remember = false;
 
+    public function mount(): void
+    {
+        $this->login = request()->query('email', '');
+    }
+
     protected function rules(): array
     {
         return [
